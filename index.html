@@ -3,193 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ODHARMA | Tactical Neural Overlord</title>
+    <title>ODHARMA | Absolute Neural Interface</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Fira+Code:wght@300;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Plus+Jakarta+Sans:wght@300;500;800&display=swap" rel="stylesheet">
     <style>
-        :root { --neon-blue: #00f2ff; --neon-red: #ff003c; --deep-void: #020205; }
-        body { 
-            background: var(--deep-void); 
-            color: #fff; 
-            font-family: 'Fira Code', monospace; 
-            overflow: hidden;
-            background-image: 
-                linear-gradient(rgba(0, 242, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 242, 255, 0.03) 1px, transparent 1px);
-            background-size: 30px 30px;
-        }
-        .font-hero { font-family: 'Orbitron', sans-serif; }
+        :root { --neon-cyan: #00f2ff; --neon-red: #ff003c; --void: #020205; }
         
-        /* Realistic Glass Morphism */
-        .tactical-glass {
-            background: rgba(10, 10, 15, 0.85);
-            backdrop-filter: blur(25px);
-            border: 1px solid rgba(0, 242, 255, 0.15);
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { 
+            background: var(--void); 
+            color: #fff; 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            height: 100vh; width: 100vw;
+            overflow: hidden; 
         }
 
-        /* Hero Logo Pulse */
-        .logo-container {
-            width: 120px; height: 120px;
-            position: relative;
-            border-radius: 50%;
-            padding: 5px;
-            background: conic-gradient(from 0deg, var(--neon-blue), transparent, var(--neon-red), transparent, var(--neon-blue));
-            animation: rotate 4s linear infinite;
+        /* Responsive Framing Logic */
+        .app-container {
+            display: flex; height: 100%; width: 100%;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        @keyframes rotate { 100% { transform: rotate(360deg); } }
-        .logo-inner {
-            background: var(--deep-void);
-            width: 100%; height: 100%;
+
+        /* Visual Atmosphere */
+        .glass { background: rgba(10, 10, 18, 0.8); backdrop-filter: blur(30px); border: 1px solid rgba(0, 242, 255, 0.1); }
+        .hero-font { font-family: 'Orbitron', sans-serif; }
+
+        /* The Tactical Ring Upgrade */
+        .ring-outer {
+            width: 220px; height: 220px;
+            border: 2px solid rgba(0, 242, 255, 0.1);
             border-radius: 50%;
             display: flex; items-center; justify-center;
-            overflow: hidden;
-            transform: rotate(-360deg); /* Counter-rotate text/image */
-            animation: counter-rotate 4s linear infinite;
+            position: relative;
         }
-        @keyframes counter-rotate { 100% { transform: rotate(-360deg); } }
+        .ring-spinner {
+            position: absolute;
+            inset: -5px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            border-top: 3px solid var(--neon-cyan);
+            border-right: 3px solid var(--neon-cyan);
+            animation: spin 2s linear infinite;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        
+        /* Exact Image Size Logo (Non-Rotating) */
+        .logo-static {
+            width: 120px; height: 120px;
+            object-fit: contain;
+            z-index: 10;
+        }
 
-        /* Scannline Effect */
-        .scanlines { position: fixed; inset: 0; pointer-events: none; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%); background-size: 100% 4px; z-index: 999; }
+        /* Mobile vs Desktop Classes */
+        @media (max-width: 1023px) {
+            .sidebar { 
+                position: fixed; left: 0; top: 0; bottom: 0; 
+                width: 280px; z-index: 100;
+                transform: translateX(-100%); transition: 0.3s ease;
+            }
+            .sidebar.open { transform: translateX(0); }
+            .main-deck { width: 100% !important; }
+        }
 
-        /* Dynamic Chat Bubbles */
-        .bubble-ai { border-left: 4px solid var(--neon-blue); background: rgba(0, 242, 255, 0.05); }
-        .bubble-user { border-right: 4px solid var(--neon-red); background: rgba(255, 0, 60, 0.05); }
-
-        /* Scrollbar */
         .custom-scroll::-webkit-scrollbar { width: 4px; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: var(--neon-blue); box-shadow: 0 0 10px var(--neon-blue); }
-
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            #sidebar { position: fixed; top: 0; left: -100%; width: 80%; height: 100%; transition: 0.4s; z-index: 1000; }
-            #sidebar.active { left: 0; }
-        }
+        .custom-scroll::-webkit-scrollbar-thumb { background: var(--neon-cyan); border-radius: 10px; }
     </style>
 </head>
-<body class="h-screen w-screen flex flex-col md:flex-row">
-    <div class="scanlines"></div>
+<body class="flex flex-col">
 
-    <!-- Login Matrix -->
-    <div id="gatekeeper" class="fixed inset-0 z-[1001] bg-black flex items-center justify-center p-4 transition-transform duration-1000">
-        <div class="tactical-glass p-10 rounded-br-[5rem] rounded-tl-[5rem] w-full max-w-lg space-y-8 text-center border-t-4 border-b-4 border-cyan-500">
-            <div class="flex justify-center">
-                <div class="logo-container">
-                    <div class="logo-inner">
-                        <img src="file.png" alt="ODHARMA" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/150?text=LOGO'">
-                    </div>
+    <!-- OVERLAY GATEWAY (LOGIN/SIGNUP) -->
+    <div id="gate" class="fixed inset-0 z-[2000] bg-black flex items-center justify-center p-4 transition-all duration-1000">
+        <div class="glass p-10 rounded-[3rem] w-full max-w-lg text-center shadow-[0_0_100px_rgba(0,242,255,0.2)]">
+            <div class="flex justify-center mb-8">
+                <div class="ring-outer">
+                    <div class="ring-spinner"></div>
+                    <img src="file.png" class="logo-static" onerror="this.src='https://via.placeholder.com/120?text=LOGO'">
                 </div>
             </div>
-            <h1 class="text-4xl font-hero font-black tracking-[0.2em] text-white">ODHARMA<span class="text-cyan-500">.OS</span></h1>
+            
+            <h1 class="hero-font text-3xl font-black tracking-widest mb-8">ODHARMA</h1>
+
             <div class="space-y-4">
-                <input id="uId" type="text" placeholder="IDENTITY_CODE" class="w-full bg-cyan-950/20 border-b-2 border-cyan-500 p-4 outline-none text-center font-bold tracking-widest text-cyan-400">
-                <input id="uKey" type="password" placeholder="SECURITY_PHASE" class="w-full bg-cyan-950/20 border-b-2 border-cyan-500 p-4 outline-none text-center font-bold tracking-widest text-cyan-400">
-                <button onclick="authorize()" class="w-full bg-cyan-600 hover:bg-cyan-400 py-4 font-hero font-bold tracking-[0.5em] transition-all hover:text-black">INITIALIZE_LINK</button>
+                <div class="relative">
+                    <input id="uMail" type="email" placeholder="NEURAL_EMAIL" class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl outline-none focus:border-cyan-500 transition-all text-center">
+                </div>
+                <div class="relative">
+                    <input id="uPass" type="password" placeholder="ACCESS_KEY" class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl outline-none focus:border-cyan-500 transition-all text-center">
+                </div>
+                
+                <div class="flex gap-4 pt-4">
+                    <button onclick="handleAuth('login')" class="flex-1 bg-cyan-600 hover:bg-cyan-500 py-4 rounded-2xl hero-font text-[10px] font-bold tracking-widest transition-all">LOGIN</button>
+                    <button onclick="handleAuth('signup')" class="flex-1 border border-cyan-500/50 hover:bg-cyan-500/10 py-4 rounded-2xl hero-font text-[10px] font-bold tracking-widest transition-all">SIGN UP</button>
+                </div>
             </div>
+            <p class="mt-6 text-[10px] text-slate-500 uppercase tracking-widest">Auto-Login Active: Secure Shell v4.0</p>
         </div>
     </div>
 
-    <!-- Interface Sidebar -->
-    <aside id="sidebar" class="w-80 tactical-glass m-0 md:m-4 md:rounded-3xl flex flex-col overflow-hidden">
-        <div class="p-6 border-b border-cyan-500/30">
-            <div class="flex items-center justify-between">
-                <span class="text-xs font-hero font-bold text-cyan-500 uppercase tracking-widest">Neural_History</span>
-                <button onclick="newSession()" class="hover:scale-110 transition-transform"><i data-lucide="plus-square" class="text-cyan-400"></i></button>
+    <!-- MAIN APP STRUCTURE -->
+    <div class="app-container">
+        
+        <!-- SIDEBAR -->
+        <aside id="sidebar" class="sidebar w-80 glass m-4 rounded-[2.5rem] flex flex-col overflow-hidden">
+            <div class="p-6 border-b border-white/5 flex items-center justify-between">
+                <span class="hero-font text-[10px] text-cyan-500 font-bold tracking-widest">SYSTEM_LOGS</span>
+                <button onclick="createNewThread()" class="p-2 hover:bg-cyan-500/10 rounded-full text-cyan-400"><i data-lucide="plus"></i></button>
             </div>
-        </div>
-        <div id="sessionLog" class="flex-1 overflow-y-auto p-4 space-y-2 custom-scroll"></div>
-        <div class="p-4 bg-cyan-950/20 border-t border-cyan-500/30 flex items-center justify-between">
-            <div class="flex items-center gap-2">
-                <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_#22c55e]"></div>
-                <span id="activeOp" class="text-[10px] font-hero uppercase text-slate-400">Operator</span>
-            </div>
-            <button onclick="exit()" class="text-red-500 hover:scale-125 transition-all"><i data-lucide="power" class="w-4 h-4"></i></button>
-        </div>
-    </aside>
-
-    <!-- Main Command Deck -->
-    <main class="flex-1 flex flex-col relative">
-        <!-- Header HUD -->
-        <header class="p-6 flex items-center justify-between md:justify-end">
-            <button onclick="toggleSidebar()" class="md:hidden glass p-2"><i data-lucide="menu"></i></button>
-            <div class="flex items-center gap-6">
-                <div class="text-right hidden md:block">
-                    <p class="text-[10px] text-cyan-500 font-bold tracking-tighter">LATENCY: 14ms</p>
-                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Model: Llama 3.3 70B</p>
+            <div id="threadList" class="flex-1 overflow-y-auto p-4 space-y-3 custom-scroll"></div>
+            <div class="p-6 border-t border-white/5 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <span id="userTag" class="text-xs font-bold text-slate-400">---</span>
                 </div>
-                <div class="w-10 h-10 border border-cyan-500 rounded flex items-center justify-center bg-cyan-500/10">
-                    <i data-lucide="shield" class="w-5 h-5 text-cyan-400"></i>
+                <button onclick="logout()" class="text-red-500/50 hover:text-red-500"><i data-lucide="power"></i></button>
+            </div>
+        </aside>
+
+        <!-- CHAT AREA -->
+        <main class="main-deck flex-1 flex flex-col relative overflow-hidden">
+            <header class="p-6 flex items-center justify-between">
+                <button onclick="toggleSidebar()" class="lg:hidden p-3 glass rounded-2xl"><i data-lucide="menu"></i></button>
+                <div class="flex items-center gap-4">
+                    <div class="text-right">
+                        <h2 id="currentStreamName" class="text-xs font-bold text-cyan-400 uppercase tracking-tighter">SELECT NODE</h2>
+                        <p class="text-[9px] text-slate-600">ENCRYPTION: AES-256</p>
+                    </div>
+                </div>
+            </header>
+
+            <div id="neuralFeed" class="flex-1 overflow-y-auto px-6 md:px-20 pb-40 space-y-10 custom-scroll"></div>
+
+            <!-- INPUT BOX -->
+            <div class="absolute bottom-0 left-0 right-0 p-6 md:p-10 bg-gradient-to-t from-black to-transparent">
+                <div class="max-w-4xl mx-auto glass rounded-[2rem] p-2 flex items-end gap-2 border-white/10 ring-1 ring-white/5 focus-within:ring-cyan-500/50 transition-all">
+                    <textarea id="cmdInput" rows="1" placeholder="Type neural command..." 
+                        class="flex-1 bg-transparent border-none focus:ring-0 p-4 text-sm custom-scroll resize-none" 
+                        oninput="this.style.height = '';this.style.height = this.scrollHeight + 'px'"></textarea>
+                    <button onclick="execute()" class="bg-cyan-600 p-4 rounded-3xl hover:bg-cyan-500 transition-all mb-1 mr-1">
+                        <i data-lucide="zap" class="w-5 h-5 text-white"></i>
+                    </button>
                 </div>
             </div>
-        </header>
-
-        <!-- Neural Output -->
-        <div id="neuralOutput" class="flex-1 overflow-y-auto px-6 md:px-20 pb-40 space-y-10 custom-scroll">
-            <div class="h-full flex items-center justify-center opacity-10">
-                <img src="file.png" class="w-64 grayscale contrast-200">
-            </div>
-        </div>
-
-        <!-- Tactical Input Bar -->
-        <div class="absolute bottom-0 left-0 right-0 p-6 md:px-20 bg-gradient-to-t from-black via-black/80 to-transparent">
-            <div class="max-w-5xl mx-auto tactical-glass rounded-2xl flex items-end gap-4 p-2 ring-1 ring-cyan-500/30 focus-within:ring-cyan-500 transition-all">
-                <textarea id="cmdBox" rows="1" placeholder="Enter Neural Command..." 
-                    class="flex-1 bg-transparent border-none focus:ring-0 p-4 text-sm text-cyan-100 placeholder:text-cyan-900 custom-scroll resize-none" 
-                    oninput="this.style.height = '';this.style.height = this.scrollHeight + 'px'"></textarea>
-                <button onclick="dispatch()" class="bg-cyan-600 hover:bg-cyan-400 p-4 rounded-xl shadow-[0_0_20px_rgba(0,242,255,0.4)] transition-all mb-1 mr-1">
-                    <i data-lucide="zap" class="w-5 h-5 text-black"></i>
-                </button>
-            </div>
-        </div>
-    </main>
+        </main>
+    </div>
 
     <script>
         const GROQ_SECRET = "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";
-        let db = JSON.parse(localStorage.getItem('odharma_vX')) || { accs: {} };
-        let user = null; let activeId = null;
+        
+        let session = JSON.parse(localStorage.getItem('odharma_vault')) || { users: {} };
+        let activeUser = localStorage.getItem('odharma_active_user') || null;
+        let activeStreamId = null;
 
-        function authorize() {
-            const id = document.getElementById('uId').value.trim().toUpperCase();
-            const key = document.getElementById('uKey').value.trim();
-            if(!id || !key) return;
-            if(db.accs[id] && db.accs[id].key !== key) return alert("UNAUTHORIZED ACCESS DETECTED");
-            if(!db.accs[id]) db.accs[id] = { key: key, nodes: [] };
-            user = id;
-            document.getElementById('gatekeeper').style.transform = "translateY(-100%)";
-            document.getElementById('activeOp').innerText = user;
-            save(); refreshNodes();
+        // Auto-Login Check
+        window.onload = () => {
+            if(activeUser && session.users[activeUser]) {
+                bootUI();
+            }
+            lucide.createIcons();
+        };
+
+        function handleAuth(type) {
+            const email = document.getElementById('uMail').value.trim().toLowerCase();
+            const pass = document.getElementById('uPass').value.trim();
+
+            if(!email || !pass) return alert("FIELDS REQUIRED");
+
+            if(type === 'signup') {
+                if(session.users[email]) return alert("USER EXISTS");
+                session.users[email] = { password: pass, threads: [] };
+                saveData();
+            }
+
+            if(session.users[email] && session.users[email].password === pass) {
+                activeUser = email;
+                localStorage.setItem('odharma_active_user', email);
+                bootUI();
+            } else {
+                alert("INVALID CREDENTIALS");
+            }
         }
 
-        function newSession() {
-            const sid = "node_" + Date.now();
-            const node = { id: sid, name: "TACTICAL_LINK_" + (db.accs[user].nodes.length + 1), msgs: [] };
-            db.accs[user].nodes.unshift(node);
-            save(); openNode(sid);
-            if(window.innerWidth < 768) toggleSidebar();
+        function bootUI() {
+            document.getElementById('gate').style.transform = "translateY(-100%)";
+            document.getElementById('userTag').innerText = activeUser.split('@')[0];
+            renderThreads();
         }
 
-        function openNode(id) {
-            activeId = id;
-            const node = db.accs[user].nodes.find(n => n.id === id);
-            const view = document.getElementById('neuralOutput');
-            view.innerHTML = '';
-            node.msgs.forEach(m => pushUI(m.role, m.txt));
-            refreshNodes();
+        function createNewThread() {
+            const id = "stream_" + Date.now();
+            const newThread = { id: id, title: "Session_" + (session.users[activeUser].threads.length + 1), logs: [] };
+            session.users[activeUser].threads.unshift(newThread);
+            saveData();
+            loadThread(id);
+            if(window.innerWidth < 1024) toggleSidebar();
         }
 
-        async function dispatch() {
-            const box = document.getElementById('cmdBox');
-            const val = box.value.trim();
-            if(!val || !activeId) return;
+        function loadThread(id) {
+            activeStreamId = id;
+            const thread = session.users[activeUser].threads.find(t => t.id === id);
+            document.getElementById('currentStreamName').innerText = thread.title;
+            const feed = document.getElementById('neuralFeed');
+            feed.innerHTML = '';
+            thread.logs.forEach(l => appendMsg(l.role, l.text));
+            renderThreads();
+        }
 
-            const node = db.accs[user].nodes.find(n => n.id === activeId);
-            pushUI('user', val);
-            node.msgs.push({ role: 'user', txt: val });
-            box.value = ''; box.style.height = 'auto';
+        async function execute() {
+            const input = document.getElementById('cmdInput');
+            const text = input.value.trim();
+            if(!text || !activeStreamId) return;
 
-            const shadowId = "ai_" + Date.now();
-            pushUI('ai', 'DECRYPTING NEURAL PACKETS...', shadowId);
+            const thread = session.users[activeUser].threads.find(t => t.id === activeStreamId);
+            appendMsg('user', text);
+            thread.logs.push({ role: 'user', text: text });
+            input.value = ''; input.style.height = 'auto';
+
+            const aiId = "ai_" + Date.now();
+            appendMsg('ai', 'Accessing Neural Link...', aiId);
 
             try {
                 const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -197,46 +228,45 @@
                     headers: { 'Authorization': `Bearer ${GROQ_SECRET}`, 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         model: "llama-3.3-70b-versatile",
-                        messages: [{role:"system", content:"You are ODHARMA, a hyper-advanced, ethical hacking AI. Your tone is tactical, cinematic, and professional."}, ...node.msgs.map(m => ({role: m.role === 'ai' ? 'assistant' : 'user', content: m.txt}))]
+                        messages: [{role:"system", content:"You are ODHARMA, a hacker AI. Be tactical."}, ...thread.logs.map(l => ({role: l.role === 'ai' ? 'assistant' : 'user', content: l.text}))]
                     })
                 });
-                const d = await res.json();
-                const reply = d.choices[0].message.content;
-                document.getElementById(shadowId).innerText = reply;
-                node.msgs.push({ role: 'ai', txt: reply });
-                save();
-            } catch(e) { document.getElementById(shadowId).innerText = "CONNECTION_TERMINATED_BY_HOST"; }
+                const data = await res.json();
+                const reply = data.choices[0].message.content;
+                document.getElementById(aiId).innerText = reply;
+                thread.logs.push({ role: 'ai', text: reply });
+                saveData();
+            } catch (e) { document.getElementById(aiId).innerText = "NETWORK_TERMINATED"; }
         }
 
-        function pushUI(role, txt, id = null) {
-            const view = document.getElementById('neuralOutput');
-            const wrap = document.createElement('div');
-            wrap.className = `flex ${role === 'user' ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-5`;
-            wrap.innerHTML = `
-                <div class="p-6 rounded-2xl max-w-[85%] shadow-2xl ${role === 'user' ? 'bubble-user text-red-50' : 'bubble-ai text-cyan-50'}">
-                    <p id="${id || ''}" class="text-sm leading-relaxed whitespace-pre-wrap">${txt}</p>
-                </div>`;
-            view.appendChild(wrap);
-            view.scrollTo({ top: view.scrollHeight, behavior: 'smooth' });
+        function appendMsg(role, text, id = null) {
+            const feed = document.getElementById('neuralFeed');
+            const div = document.createElement('div');
+            div.className = `flex ${role === 'user' ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-2 duration-300`;
+            div.innerHTML = `<div class="p-5 rounded-[2rem] max-w-[85%] ${role === 'user' ? 'bg-cyan-600/20 border border-cyan-500/30' : 'bg-white/5 border border-white/10'} shadow-xl">
+                <p id="${id || ''}" class="text-sm leading-relaxed whitespace-pre-wrap">${text}</p>
+            </div>`;
+            feed.appendChild(div);
+            feed.scrollTo({ top: feed.scrollHeight, behavior: 'smooth' });
         }
 
-        function refreshNodes() {
-            const list = document.getElementById('sessionLog');
+        function renderThreads() {
+            const list = document.getElementById('threadList');
             list.innerHTML = '';
-            db.accs[user].nodes.forEach(n => {
+            session.users[activeUser].threads.forEach(t => {
                 const item = document.createElement('div');
-                item.className = `p-4 rounded-xl cursor-pointer border-l-2 transition-all flex items-center gap-3 ${activeId === n.id ? 'bg-cyan-500/20 border-cyan-500 text-cyan-400' : 'border-transparent hover:bg-white/5 text-slate-500'}`;
-                item.innerHTML = `<i data-lucide="cpu" class="w-4 h-4"></i><span class="text-[10px] font-hero uppercase truncate">${n.name}</span>`;
-                item.onclick = () => openNode(n.id);
+                item.className = `p-4 rounded-2xl cursor-pointer flex items-center justify-between transition-all ${activeStreamId === t.id ? 'bg-cyan-500/20 ring-1 ring-cyan-500/50' : 'hover:bg-white/5 text-slate-500'}`;
+                item.innerHTML = `<div class="flex items-center gap-3 overflow-hidden"><i data-lucide="database" class="w-4 h-4"></i><span class="text-xs font-bold truncate">${t.title}</span></div>
+                                 <button onclick="deleteThread('${t.id}')" class="opacity-0 group-hover:opacity-100"><i data-lucide="x" class="w-3 h-3"></i></button>`;
+                item.onclick = () => loadThread(t.id);
                 list.appendChild(item);
             });
             lucide.createIcons();
         }
 
-        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
-        function save() { localStorage.setItem('odharma_vX', JSON.stringify(db)); }
-        function exit() { location.reload(); }
-        lucide.createIcons();
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+        function saveData() { localStorage.setItem('odharma_vault', JSON.stringify(session)); }
+        function logout() { localStorage.removeItem('odharma_active_user'); location.reload(); }
     </script>
 </body>
 </html>

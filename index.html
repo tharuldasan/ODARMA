@@ -1,272 +1,402 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ODHARMA | Absolute Neural Interface</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Plus+Jakarta+Sans:wght@300;500;800&display=swap" rel="stylesheet">
-    <style>
-        :root { --neon-cyan: #00f2ff; --neon-red: #ff003c; --void: #020205; }
-        
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { 
-            background: var(--void); 
-            color: #fff; 
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            height: 100vh; width: 100vw;
-            overflow: hidden; 
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 
-        /* Responsive Framing Logic */
-        .app-container {
-            display: flex; height: 100%; width: 100%;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+<title>ODARMA | Absolute Neural Interface</title>
 
-        /* Visual Atmosphere */
-        .glass { background: rgba(10, 10, 18, 0.8); backdrop-filter: blur(30px); border: 1px solid rgba(0, 242, 255, 0.1); }
-        .hero-font { font-family: 'Orbitron', sans-serif; }
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
 
-        /* The Tactical Ring Upgrade */
-        .ring-outer {
-            width: 220px; height: 220px;
-            border: 2px solid rgba(0, 242, 255, 0.1);
-            border-radius: 50%;
-            display: flex; items-center; justify-center;
-            position: relative;
-        }
-        .ring-spinner {
-            position: absolute;
-            inset: -5px;
-            border-radius: 50%;
-            border: 3px solid transparent;
-            border-top: 3px solid var(--neon-cyan);
-            border-right: 3px solid var(--neon-cyan);
-            animation: spin 2s linear infinite;
-        }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-        
-        /* Exact Image Size Logo (Non-Rotating) */
-        .logo-static {
-            width: 120px; height: 120px;
-            object-fit: contain;
-            z-index: 10;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-        /* Mobile vs Desktop Classes */
-        @media (max-width: 1023px) {
-            .sidebar { 
-                position: fixed; left: 0; top: 0; bottom: 0; 
-                width: 280px; z-index: 100;
-                transform: translateX(-100%); transition: 0.3s ease;
-            }
-            .sidebar.open { transform: translateX(0); }
-            .main-deck { width: 100% !important; }
-        }
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/common.min.js"></script>
 
-        .custom-scroll::-webkit-scrollbar { width: 4px; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: var(--neon-cyan); border-radius: 10px; }
-    </style>
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github-dark.min.css">
+
+<style>
+
+:root{
+    --neon:#00f2ff;
+    --bg:#020205;
+    --glass:rgba(15,15,25,0.82);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+body{
+    background:var(--bg);
+    color:white;
+    overflow:hidden;
+    font-family:'Plus Jakarta Sans',sans-serif;
+    width:100vw;
+    height:100vh;
+}
+
+/* ===== BACKGROUND ===== */
+
+body::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    background:
+    radial-gradient(circle at top left,
+    rgba(0,242,255,0.08),
+    transparent 35%),
+
+    radial-gradient(circle at bottom right,
+    rgba(0,242,255,0.05),
+    transparent 35%);
+    pointer-events:none;
+}
+
+/* ===== GLASS ===== */
+
+.glass{
+    background:var(--glass);
+    backdrop-filter:blur(30px);
+    border:1px solid rgba(255,255,255,0.06);
+}
+
+/* ===== FONTS ===== */
+
+.hero{
+    font-family:'Orbitron',sans-serif;
+}
+
+/* ===== LOGIN ===== */
+
+#gate{
+    position:fixed;
+    inset:0;
+    z-index:5000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:black;
+    transition:1s ease;
+}
+
+/* ===== LOGO RING ===== */
+
+.logo-ring{
+    width:240px;
+    height:240px;
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    border:2px solid rgba(0,242,255,0.12);
+}
+
+.logo-ring::before{
+    content:'';
+    position:absolute;
+    inset:-6px;
+    border-radius:50%;
+    border:3px solid transparent;
+    border-top:3px solid var(--neon);
+    border-right:3px solid var(--neon);
+    animation:spin 2s linear infinite;
+}
+
+.logo-img{
+    width:110px;
+    height:110px;
+    object-fit:contain;
+    position:relative;
+    z-index:10;
+    display:block;
+}
+
+/* ===== APP ===== */
+
+.app{
+    width:100%;
+    height:100%;
+    display:flex;
+}
+
+/* ===== SIDEBAR ===== */
+
+.sidebar{
+    width:320px;
+    margin:16px;
+    border-radius:34px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    transition:0.35s ease;
+}
+
+.sidebar-top{
+    padding:24px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:1px solid rgba(255,255,255,0.05);
+}
+
+.sidebar-actions{
+    display:flex;
+    gap:10px;
+}
+
+.side-btn{
+    width:42px;
+    height:42px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(255,255,255,0.04);
+    cursor:pointer;
+    transition:0.25s;
+}
+
+.side-btn:hover{
+    background:rgba(0,242,255,0.12);
+}
+
+.thread-search{
+    padding:16px;
+}
+
+.thread-search input{
+    width:100%;
+    background:rgba(255,255,255,0.05);
+    border:none;
+    outline:none;
+    color:white;
+    padding:14px;
+    border-radius:16px;
+    font-size:13px;
+}
+
+#threadList{
+    flex:1;
+    overflow-y:auto;
+    padding:16px;
+}
+
+.thread{
+    padding:16px;
+    border-radius:20px;
+    margin-bottom:10px;
+    cursor:pointer;
+    transition:0.25s;
+    position:relative;
+}
+
+.thread:hover{
+    background:rgba(255,255,255,0.05);
+}
+
+.thread.active{
+    background:rgba(0,242,255,0.12);
+    border:1px solid rgba(0,242,255,0.3);
+}
+
+.thread-title{
+    font-size:13px;
+    font-weight:700;
+}
+
+.thread-menu{
+    position:absolute;
+    top:12px;
+    right:12px;
+    opacity:0;
+    transition:0.25s;
+}
+
+.thread:hover .thread-menu{
+    opacity:1;
+}
+
+.thread-dropdown{
+    position:absolute;
+    right:0;
+    top:32px;
+    width:140px;
+    border-radius:16px;
+    overflow:hidden;
+    z-index:200;
+    display:none;
+}
+
+.thread-dropdown button{
+    width:100%;
+    border:none;
+    background:none;
+    color:white;
+    padding:14px;
+    text-align:left;
+    cursor:pointer;
+}
+
+.thread-dropdown button:hover{
+    background:rgba(255,255,255,0.05);
+}
+
+/* ===== MAIN ===== */
+
+.main{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    position:relative;
+}
+
+/* ===== HEADER ===== */
+
+.header{
+    padding:24px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.mobile-menu{
+    display:none;
+}
+
+/* ===== CHAT ===== */
+
+#feed{
+    flex:1;
+    overflow-y:auto;
+    padding:20px;
+    padding-bottom:180px;
+}
+
+.msg-wrap{
+    width:100%;
+    display:flex;
+    margin-bottom:24px;
+}
+
+.msg-wrap.user{
+    justify-content:flex-end;
+}
+
+.msg{
+    max-width:85%;
+    padding:22px;
+    border-radius:28px;
+    line-height:1.7;
+    font-size:14px;
+}
+
+.user .msg{
+    background:rgba(0,242,255,0.15);
+    border:1px solid rgba(0,242,255,0.2);
+}
+
+.ai .msg{
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.06);
+}
+
+/* ===== INPUT ===== */
+
+.input-area{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    padding:24px;
+    background:linear-gradient(to top,black,transparent);
+}
+
+.input-box{
+    max-width:1100px;
+    margin:auto;
+    padding:10px;
+    border-radius:30px;
+    display:flex;
+    gap:12px;
+    align-items:flex-end;
+}
+
+#prompt{
+    flex:1;
+    resize:none;
+    border:none;
+    outline:none;
+    background:none;
+    color:white;
+    padding:16px;
+    max-height:240px;
+    overflow-y:auto;
+    font-size:14px;
+}
+
+.send-btn{
+    width:60px;
+    height:60px;
+    border:none;
+    border-radius:22px;
+    background:var(--neon);
+    color:black;
+    cursor:pointer;
+    transition:0.25s;
+}
+
+.send-btn:hover{
+    transform:scale(1.05);
+}
+
+/* ===== MOBILE ===== */
+
+@media(max-width:1024px){
+
+    .sidebar{
+        position:fixed;
+        left:0;
+        top:0;
+        bottom:0;
+        z-index:500;
+        transform:translateX(-120%);
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .mobile-menu{
+        display:flex;
+    }
+
+    .msg{
+        max-width:95%;
+    }
+
+}
+
+@keyframes spin{
+    100%{
+        transform:rotate(360deg);
+    }
+}
+
+::-webkit-scrollbar{
+    width:4px;
+}
+
+::-webkit-scrollbar-thumb{
+    background:var(--neon);
+    border-radius:20px;
+}
+
+</style>
 </head>
-<body class="flex flex-col">
-
-    <!-- OVERLAY GATEWAY (LOGIN/SIGNUP) -->
-    <div id="gate" class="fixed inset-0 z-[2000] bg-black flex items-center justify-center p-4 transition-all duration-1000">
-        <div class="glass p-10 rounded-[3rem] w-full max-w-lg text-center shadow-[0_0_100px_rgba(0,242,255,0.2)]">
-            <div class="flex justify-center mb-8">
-                <div class="ring-outer">
-                    <div class="ring-spinner"></div>
-                    <img src="file.png" class="logo-static" onerror="this.src='https://via.placeholder.com/120?text=LOGO'">
-                </div>
-            </div>
-            
-            <h1 class="hero-font text-3xl font-black tracking-widest mb-8">ODHARMA</h1>
-
-            <div class="space-y-4">
-                <div class="relative">
-                    <input id="uMail" type="email" placeholder="NEURAL_EMAIL" class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl outline-none focus:border-cyan-500 transition-all text-center">
-                </div>
-                <div class="relative">
-                    <input id="uPass" type="password" placeholder="ACCESS_KEY" class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl outline-none focus:border-cyan-500 transition-all text-center">
-                </div>
-                
-                <div class="flex gap-4 pt-4">
-                    <button onclick="handleAuth('login')" class="flex-1 bg-cyan-600 hover:bg-cyan-500 py-4 rounded-2xl hero-font text-[10px] font-bold tracking-widest transition-all">LOGIN</button>
-                    <button onclick="handleAuth('signup')" class="flex-1 border border-cyan-500/50 hover:bg-cyan-500/10 py-4 rounded-2xl hero-font text-[10px] font-bold tracking-widest transition-all">SIGN UP</button>
-                </div>
-            </div>
-            <p class="mt-6 text-[10px] text-slate-500 uppercase tracking-widest">Auto-Login Active: Secure Shell v4.0</p>
-        </div>
-    </div>
-
-    <!-- MAIN APP STRUCTURE -->
-    <div class="app-container">
-        
-        <!-- SIDEBAR -->
-        <aside id="sidebar" class="sidebar w-80 glass m-4 rounded-[2.5rem] flex flex-col overflow-hidden">
-            <div class="p-6 border-b border-white/5 flex items-center justify-between">
-                <span class="hero-font text-[10px] text-cyan-500 font-bold tracking-widest">SYSTEM_LOGS</span>
-                <button onclick="createNewThread()" class="p-2 hover:bg-cyan-500/10 rounded-full text-cyan-400"><i data-lucide="plus"></i></button>
-            </div>
-            <div id="threadList" class="flex-1 overflow-y-auto p-4 space-y-3 custom-scroll"></div>
-            <div class="p-6 border-t border-white/5 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                    <span id="userTag" class="text-xs font-bold text-slate-400">---</span>
-                </div>
-                <button onclick="logout()" class="text-red-500/50 hover:text-red-500"><i data-lucide="power"></i></button>
-            </div>
-        </aside>
-
-        <!-- CHAT AREA -->
-        <main class="main-deck flex-1 flex flex-col relative overflow-hidden">
-            <header class="p-6 flex items-center justify-between">
-                <button onclick="toggleSidebar()" class="lg:hidden p-3 glass rounded-2xl"><i data-lucide="menu"></i></button>
-                <div class="flex items-center gap-4">
-                    <div class="text-right">
-                        <h2 id="currentStreamName" class="text-xs font-bold text-cyan-400 uppercase tracking-tighter">SELECT NODE</h2>
-                        <p class="text-[9px] text-slate-600">ENCRYPTION: AES-256</p>
-                    </div>
-                </div>
-            </header>
-
-            <div id="neuralFeed" class="flex-1 overflow-y-auto px-6 md:px-20 pb-40 space-y-10 custom-scroll"></div>
-
-            <!-- INPUT BOX -->
-            <div class="absolute bottom-0 left-0 right-0 p-6 md:p-10 bg-gradient-to-t from-black to-transparent">
-                <div class="max-w-4xl mx-auto glass rounded-[2rem] p-2 flex items-end gap-2 border-white/10 ring-1 ring-white/5 focus-within:ring-cyan-500/50 transition-all">
-                    <textarea id="cmdInput" rows="1" placeholder="Type neural command..." 
-                        class="flex-1 bg-transparent border-none focus:ring-0 p-4 text-sm custom-scroll resize-none" 
-                        oninput="this.style.height = '';this.style.height = this.scrollHeight + 'px'"></textarea>
-                    <button onclick="execute()" class="bg-cyan-600 p-4 rounded-3xl hover:bg-cyan-500 transition-all mb-1 mr-1">
-                        <i data-lucide="zap" class="w-5 h-5 text-white"></i>
-                    </button>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <script>
-        const GROQ_SECRET = "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";
-        
-        let session = JSON.parse(localStorage.getItem('odharma_vault')) || { users: {} };
-        let activeUser = localStorage.getItem('odharma_active_user') || null;
-        let activeStreamId = null;
-
-        // Auto-Login Check
-        window.onload = () => {
-            if(activeUser && session.users[activeUser]) {
-                bootUI();
-            }
-            lucide.createIcons();
-        };
-
-        function handleAuth(type) {
-            const email = document.getElementById('uMail').value.trim().toLowerCase();
-            const pass = document.getElementById('uPass').value.trim();
-
-            if(!email || !pass) return alert("FIELDS REQUIRED");
-
-            if(type === 'signup') {
-                if(session.users[email]) return alert("USER EXISTS");
-                session.users[email] = { password: pass, threads: [] };
-                saveData();
-            }
-
-            if(session.users[email] && session.users[email].password === pass) {
-                activeUser = email;
-                localStorage.setItem('odharma_active_user', email);
-                bootUI();
-            } else {
-                alert("INVALID CREDENTIALS");
-            }
-        }
-
-        function bootUI() {
-            document.getElementById('gate').style.transform = "translateY(-100%)";
-            document.getElementById('userTag').innerText = activeUser.split('@')[0];
-            renderThreads();
-        }
-
-        function createNewThread() {
-            const id = "stream_" + Date.now();
-            const newThread = { id: id, title: "Session_" + (session.users[activeUser].threads.length + 1), logs: [] };
-            session.users[activeUser].threads.unshift(newThread);
-            saveData();
-            loadThread(id);
-            if(window.innerWidth < 1024) toggleSidebar();
-        }
-
-        function loadThread(id) {
-            activeStreamId = id;
-            const thread = session.users[activeUser].threads.find(t => t.id === id);
-            document.getElementById('currentStreamName').innerText = thread.title;
-            const feed = document.getElementById('neuralFeed');
-            feed.innerHTML = '';
-            thread.logs.forEach(l => appendMsg(l.role, l.text));
-            renderThreads();
-        }
-
-        async function execute() {
-            const input = document.getElementById('cmdInput');
-            const text = input.value.trim();
-            if(!text || !activeStreamId) return;
-
-            const thread = session.users[activeUser].threads.find(t => t.id === activeStreamId);
-            appendMsg('user', text);
-            thread.logs.push({ role: 'user', text: text });
-            input.value = ''; input.style.height = 'auto';
-
-            const aiId = "ai_" + Date.now();
-            appendMsg('ai', 'Accessing Neural Link...', aiId);
-
-            try {
-                const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-                    method: 'POST',
-                    headers: { 'Authorization': `Bearer ${GROQ_SECRET}`, 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        model: "llama-3.3-70b-versatile",
-                        messages: [{role:"system", content:"You are ODHARMA, a hacker AI. Be tactical."}, ...thread.logs.map(l => ({role: l.role === 'ai' ? 'assistant' : 'user', content: l.text}))]
-                    })
-                });
-                const data = await res.json();
-                const reply = data.choices[0].message.content;
-                document.getElementById(aiId).innerText = reply;
-                thread.logs.push({ role: 'ai', text: reply });
-                saveData();
-            } catch (e) { document.getElementById(aiId).innerText = "NETWORK_TERMINATED"; }
-        }
-
-        function appendMsg(role, text, id = null) {
-            const feed = document.getElementById('neuralFeed');
-            const div = document.createElement('div');
-            div.className = `flex ${role === 'user' ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-2 duration-300`;
-            div.innerHTML = `<div class="p-5 rounded-[2rem] max-w-[85%] ${role === 'user' ? 'bg-cyan-600/20 border border-cyan-500/30' : 'bg-white/5 border border-white/10'} shadow-xl">
-                <p id="${id || ''}" class="text-sm leading-relaxed whitespace-pre-wrap">${text}</p>
-            </div>`;
-            feed.appendChild(div);
-            feed.scrollTo({ top: feed.scrollHeight, behavior: 'smooth' });
-        }
-
-        function renderThreads() {
-            const list = document.getElementById('threadList');
-            list.innerHTML = '';
-            session.users[activeUser].threads.forEach(t => {
-                const item = document.createElement('div');
-                item.className = `p-4 rounded-2xl cursor-pointer flex items-center justify-between transition-all ${activeStreamId === t.id ? 'bg-cyan-500/20 ring-1 ring-cyan-500/50' : 'hover:bg-white/5 text-slate-500'}`;
-                item.innerHTML = `<div class="flex items-center gap-3 overflow-hidden"><i data-lucide="database" class="w-4 h-4"></i><span class="text-xs font-bold truncate">${t.title}</span></div>
-                                 <button onclick="deleteThread('${t.id}')" class="opacity-0 group-hover:opacity-100"><i data-lucide="x" class="w-3 h-3"></i></button>`;
-                item.onclick = () => loadThread(t.id);
-                list.appendChild(item);
-            });
-            lucide.createIcons();
-        }
-
-        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
-        function saveData() { localStorage.setItem('odharma_vault', JSON.stringify(session)); }
-        function logout() { localStorage.removeItem('odharma_active_user'); location.reload(); }
-    </script>
-</body>
-</html>

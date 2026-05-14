@@ -1,101 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 
-<title>ODARMA | Absolute Neural Interface</title>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ODARMA AI</title>
+
+<link rel="icon" type="image/png" href="favicon.png">
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/common.min.js"></script>
-
-<link rel="stylesheet"
-href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github-dark.min.css">
-
 <style>
 
 :root{
     --neon:#00f2ff;
     --bg:#020205;
-    --glass:rgba(15,15,25,0.82);
 }
 
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
+    font-family:'Plus Jakarta Sans',sans-serif;
 }
 
 body{
     background:var(--bg);
     color:white;
-    overflow:hidden;
-    font-family:'Plus Jakarta Sans',sans-serif;
     width:100vw;
     height:100vh;
+    overflow:hidden;
 }
 
-/* ===== BACKGROUND ===== */
+/* LOGIN */
 
-body::before{
-    content:'';
+#gate{
     position:fixed;
     inset:0;
-    background:
-    radial-gradient(circle at top left,
-    rgba(0,242,255,0.08),
-    transparent 35%),
-
-    radial-gradient(circle at bottom right,
-    rgba(0,242,255,0.05),
-    transparent 35%);
-    pointer-events:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:black;
+    z-index:9999;
 }
 
-/* ===== GLASS ===== */
-
-.glass{
-    background:var(--glass);
-    backdrop-filter:blur(30px);
+.login-box{
+    width:95%;
+    max-width:520px;
+    background:rgba(20,20,30,0.88);
     border:1px solid rgba(255,255,255,0.06);
+    backdrop-filter:blur(25px);
+    border-radius:40px;
+    padding:40px;
+    text-align:center;
 }
-
-/* ===== FONTS ===== */
 
 .hero{
     font-family:'Orbitron',sans-serif;
 }
 
-/* ===== LOGIN ===== */
-
-#gate{
-    position:fixed;
-    inset:0;
-    z-index:5000;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:black;
-    transition:1s ease;
-}
-
-/* ===== LOGO RING ===== */
-
 .logo-ring{
     width:240px;
     height:240px;
-    position:relative;
+    border-radius:50%;
+    margin:auto;
     display:flex;
     align-items:center;
     justify-content:center;
-    border-radius:50%;
-    border:2px solid rgba(0,242,255,0.12);
+    position:relative;
+    border:2px solid rgba(0,242,255,0.1);
 }
 
 .logo-ring::before{
@@ -113,12 +90,53 @@ body::before{
     width:110px;
     height:110px;
     object-fit:contain;
-    position:relative;
-    z-index:10;
-    display:block;
+    z-index:2;
 }
 
-/* ===== APP ===== */
+@keyframes spin{
+    100%{
+        transform:rotate(360deg);
+    }
+}
+
+.input{
+    width:100%;
+    padding:18px;
+    margin-top:14px;
+    border:none;
+    outline:none;
+    border-radius:18px;
+    background:rgba(255,255,255,0.05);
+    color:white;
+}
+
+.auth-btns{
+    display:flex;
+    gap:12px;
+    margin-top:20px;
+}
+
+.btn{
+    flex:1;
+    border:none;
+    padding:18px;
+    border-radius:18px;
+    cursor:pointer;
+    font-weight:700;
+}
+
+.login-btn{
+    background:var(--neon);
+    color:black;
+}
+
+.signup-btn{
+    background:transparent;
+    border:1px solid rgba(0,242,255,0.4);
+    color:white;
+}
+
+/* APP */
 
 .app{
     width:100%;
@@ -126,87 +144,62 @@ body::before{
     display:flex;
 }
 
-/* ===== SIDEBAR ===== */
+/* SIDEBAR */
 
 .sidebar{
     width:320px;
-    margin:16px;
-    border-radius:34px;
-    overflow:hidden;
+    background:rgba(15,15,25,0.9);
+    border-right:1px solid rgba(255,255,255,0.05);
     display:flex;
     flex-direction:column;
-    transition:0.35s ease;
 }
 
-.sidebar-top{
-    padding:24px;
+.side-top{
+    padding:20px;
     display:flex;
-    align-items:center;
     justify-content:space-between;
-    border-bottom:1px solid rgba(255,255,255,0.05);
+    align-items:center;
 }
 
-.sidebar-actions{
-    display:flex;
-    gap:10px;
-}
-
-.side-btn{
-    width:42px;
-    height:42px;
+.icon-btn{
+    width:44px;
+    height:44px;
     border-radius:14px;
     display:flex;
     align-items:center;
     justify-content:center;
-    background:rgba(255,255,255,0.04);
     cursor:pointer;
-    transition:0.25s;
+    background:rgba(255,255,255,0.04);
 }
 
-.side-btn:hover{
+.icon-btn:hover{
     background:rgba(0,242,255,0.12);
-}
-
-.thread-search{
-    padding:16px;
-}
-
-.thread-search input{
-    width:100%;
-    background:rgba(255,255,255,0.05);
-    border:none;
-    outline:none;
-    color:white;
-    padding:14px;
-    border-radius:16px;
-    font-size:13px;
 }
 
 #threadList{
     flex:1;
     overflow-y:auto;
-    padding:16px;
+    padding:14px;
 }
 
 .thread{
     padding:16px;
-    border-radius:20px;
+    border-radius:18px;
     margin-bottom:10px;
+    background:rgba(255,255,255,0.03);
     cursor:pointer;
-    transition:0.25s;
     position:relative;
 }
 
 .thread:hover{
-    background:rgba(255,255,255,0.05);
+    background:rgba(255,255,255,0.06);
 }
 
 .thread.active{
     background:rgba(0,242,255,0.12);
-    border:1px solid rgba(0,242,255,0.3);
 }
 
-.thread-title{
+.thread-name{
     font-size:13px;
     font-weight:700;
 }
@@ -215,40 +208,34 @@ body::before{
     position:absolute;
     top:12px;
     right:12px;
-    opacity:0;
-    transition:0.25s;
 }
 
-.thread:hover .thread-menu{
-    opacity:1;
-}
-
-.thread-dropdown{
+.dropdown{
     position:absolute;
     right:0;
-    top:32px;
-    width:140px;
-    border-radius:16px;
+    top:24px;
+    width:130px;
+    background:#111;
+    border-radius:14px;
     overflow:hidden;
-    z-index:200;
     display:none;
 }
 
-.thread-dropdown button{
+.dropdown button{
     width:100%;
+    padding:14px;
     border:none;
     background:none;
     color:white;
-    padding:14px;
-    text-align:left;
     cursor:pointer;
+    text-align:left;
 }
 
-.thread-dropdown button:hover{
-    background:rgba(255,255,255,0.05);
+.dropdown button:hover{
+    background:rgba(255,255,255,0.06);
 }
 
-/* ===== MAIN ===== */
+/* MAIN */
 
 .main{
     flex:1;
@@ -257,75 +244,53 @@ body::before{
     position:relative;
 }
 
-/* ===== HEADER ===== */
-
 .header{
-    padding:24px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
+    padding:20px;
+    border-bottom:1px solid rgba(255,255,255,0.04);
 }
-
-.mobile-menu{
-    display:none;
-}
-
-/* ===== CHAT ===== */
 
 #feed{
     flex:1;
     overflow-y:auto;
     padding:20px;
-    padding-bottom:180px;
+    padding-bottom:160px;
 }
 
-.msg-wrap{
-    width:100%;
-    display:flex;
-    margin-bottom:24px;
-}
-
-.msg-wrap.user{
-    justify-content:flex-end;
-}
-
-.msg{
-    max-width:85%;
+.message{
+    max-width:80%;
     padding:22px;
-    border-radius:28px;
+    margin-bottom:18px;
+    border-radius:26px;
     line-height:1.7;
-    font-size:14px;
 }
 
-.user .msg{
-    background:rgba(0,242,255,0.15);
-    border:1px solid rgba(0,242,255,0.2);
+.user{
+    background:rgba(0,242,255,0.14);
+    margin-left:auto;
 }
 
-.ai .msg{
+.ai{
     background:rgba(255,255,255,0.05);
-    border:1px solid rgba(255,255,255,0.06);
 }
-
-/* ===== INPUT ===== */
 
 .input-area{
     position:absolute;
+    bottom:0;
     left:0;
     right:0;
-    bottom:0;
-    padding:24px;
+    padding:20px;
     background:linear-gradient(to top,black,transparent);
 }
 
 .input-box{
-    max-width:1100px;
+    max-width:1000px;
     margin:auto;
-    padding:10px;
-    border-radius:30px;
     display:flex;
     gap:12px;
-    align-items:flex-end;
+    background:rgba(15,15,25,0.9);
+    border:1px solid rgba(255,255,255,0.05);
+    border-radius:28px;
+    padding:10px;
 }
 
 #prompt{
@@ -336,67 +301,460 @@ body::before{
     background:none;
     color:white;
     padding:16px;
-    max-height:240px;
-    overflow-y:auto;
-    font-size:14px;
+    max-height:200px;
 }
 
-.send-btn{
-    width:60px;
-    height:60px;
+.send{
+    width:58px;
+    height:58px;
     border:none;
-    border-radius:22px;
+    border-radius:18px;
+    cursor:pointer;
     background:var(--neon);
     color:black;
-    cursor:pointer;
-    transition:0.25s;
 }
 
-.send-btn:hover{
-    transform:scale(1.05);
+/* MOBILE */
+
+@media(max-width:900px){
+
+.sidebar{
+    position:fixed;
+    left:-100%;
+    top:0;
+    bottom:0;
+    z-index:1000;
+    transition:0.3s;
 }
 
-/* ===== MOBILE ===== */
-
-@media(max-width:1024px){
-
-    .sidebar{
-        position:fixed;
-        left:0;
-        top:0;
-        bottom:0;
-        z-index:500;
-        transform:translateX(-120%);
-    }
-
-    .sidebar.open{
-        transform:translateX(0);
-    }
-
-    .mobile-menu{
-        display:flex;
-    }
-
-    .msg{
-        max-width:95%;
-    }
-
+.sidebar.open{
+    left:0;
 }
 
-@keyframes spin{
-    100%{
-        transform:rotate(360deg);
-    }
-}
-
-::-webkit-scrollbar{
-    width:4px;
-}
-
-::-webkit-scrollbar-thumb{
-    background:var(--neon);
-    border-radius:20px;
 }
 
 </style>
 </head>
+
+<body>
+
+<!-- LOGIN -->
+
+<div id="gate">
+
+<div class="login-box">
+
+<div class="logo-ring">
+<img src="favicon.png" class="logo-img">
+</div>
+
+<h1 class="hero" style="margin-top:20px;font-size:34px;">
+ODARMA
+</h1>
+
+<input id="email" class="input" placeholder="EMAIL">
+<input id="password" type="password" class="input" placeholder="PASSWORD">
+
+<div class="auth-btns">
+<button class="btn login-btn" onclick="login()">LOGIN</button>
+<button class="btn signup-btn" onclick="signup()">SIGN UP</button>
+</div>
+
+</div>
+
+</div>
+
+<!-- APP -->
+
+<div class="app">
+
+<!-- SIDEBAR -->
+
+<div class="sidebar" id="sidebar">
+
+<div class="side-top">
+
+<h2 class="hero" style="font-size:14px;">
+SYSTEM LOGS
+</h2>
+
+<div style="display:flex;gap:10px;">
+
+<div class="icon-btn" onclick="toggleSidebar()">
+<i data-lucide="menu"></i>
+</div>
+
+<div class="icon-btn" onclick="newChat()">
+<i data-lucide="plus"></i>
+</div>
+
+</div>
+
+</div>
+
+<div id="threadList"></div>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main">
+
+<div class="header">
+ODARMA Neural Interface
+</div>
+
+<div id="feed"></div>
+
+<div class="input-area">
+
+<div class="input-box">
+
+<textarea id="prompt" placeholder="Ask ODARMA..."></textarea>
+
+<button class="send" onclick="sendMessage()">
+<i data-lucide="zap"></i>
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+lucide.createIcons();
+
+const API_KEY = "YOUR_OPENROUTER_KEY";
+
+const MODEL = "meta-llama/llama-3.3-70b-instruct:free";
+
+let db = JSON.parse(localStorage.getItem("odarma_db")) || {
+users:{}
+};
+
+let activeUser = localStorage.getItem("odarma_user") || null;
+
+let activeChat = null;
+
+/* AUTH */
+
+function signup(){
+
+const email = document.getElementById("email").value.trim();
+const pass = document.getElementById("password").value.trim();
+
+if(!email || !pass) return alert("Fill fields");
+
+if(db.users[email]) return alert("User exists");
+
+db.users[email] = {
+password:pass,
+threads:[]
+};
+
+save();
+
+alert("Account created");
+
+}
+
+function login(){
+
+const email = document.getElementById("email").value.trim();
+const pass = document.getElementById("password").value.trim();
+
+if(
+db.users[email] &&
+db.users[email].password === pass
+){
+
+activeUser = email;
+
+localStorage.setItem("odarma_user",email);
+
+document.getElementById("gate").style.display="none";
+
+renderThreads();
+
+}
+
+else{
+alert("Wrong login");
+}
+
+}
+
+/* STORAGE */
+
+function save(){
+localStorage.setItem("odarma_db",JSON.stringify(db));
+}
+
+/* CHAT */
+
+function newChat(){
+
+const id = "chat_" + Date.now();
+
+db.users[activeUser].threads.unshift({
+id:id,
+title:"New Chat",
+messages:[]
+});
+
+activeChat = id;
+
+save();
+
+renderThreads();
+
+renderMessages();
+
+}
+
+function renderThreads(){
+
+const list = document.getElementById("threadList");
+
+list.innerHTML = "";
+
+db.users[activeUser].threads.forEach(thread=>{
+
+const div = document.createElement("div");
+
+div.className = "thread";
+
+if(activeChat===thread.id){
+div.classList.add("active");
+}
+
+div.innerHTML = `
+<div class="thread-name">${thread.title}</div>
+
+<div class="thread-menu">
+
+<button onclick="toggleMenu(event,'${thread.id}')">
+⋮
+</button>
+
+<div class="dropdown glass" id="menu_${thread.id}">
+
+<button onclick="renameChat('${thread.id}')">
+Rename
+</button>
+
+<button onclick="deleteChat('${thread.id}')">
+Delete
+</button>
+
+</div>
+
+</div>
+`;
+
+div.onclick = ()=>{
+activeChat = thread.id;
+renderThreads();
+renderMessages();
+};
+
+list.appendChild(div);
+
+});
+
+lucide.createIcons();
+
+}
+
+function toggleMenu(e,id){
+
+e.stopPropagation();
+
+document.querySelectorAll(".dropdown").forEach(d=>{
+d.style.display="none";
+});
+
+const menu = document.getElementById("menu_"+id);
+
+menu.style.display =
+menu.style.display==="block"
+? "none"
+: "block";
+
+}
+
+function renameChat(id){
+
+const name = prompt("New chat name");
+
+if(!name) return;
+
+const chat = db.users[activeUser].threads.find(t=>t.id===id);
+
+chat.title = name;
+
+save();
+
+renderThreads();
+
+}
+
+function deleteChat(id){
+
+db.users[activeUser].threads =
+db.users[activeUser].threads.filter(t=>t.id!==id);
+
+if(activeChat===id){
+activeChat=null;
+document.getElementById("feed").innerHTML="";
+}
+
+save();
+
+renderThreads();
+
+}
+
+function renderMessages(){
+
+const feed = document.getElementById("feed");
+
+feed.innerHTML = "";
+
+const chat =
+db.users[activeUser].threads.find(t=>t.id===activeChat);
+
+if(!chat) return;
+
+chat.messages.forEach(msg=>{
+
+const div = document.createElement("div");
+
+div.className =
+"message " + msg.role;
+
+div.innerHTML = msg.content;
+
+feed.appendChild(div);
+
+});
+
+feed.scrollTop = feed.scrollHeight;
+
+}
+
+/* SEND */
+
+async function sendMessage(){
+
+const input = document.getElementById("prompt");
+
+const text = input.value.trim();
+
+if(!text) return;
+
+if(!activeChat){
+newChat();
+}
+
+const chat =
+db.users[activeUser].threads.find(t=>t.id===activeChat);
+
+/* AUTO TITLE */
+
+if(chat.title==="New Chat"){
+chat.title = text.substring(0,30);
+}
+
+/* USER */
+
+chat.messages.push({
+role:"user",
+content:text
+});
+
+renderThreads();
+renderMessages();
+
+input.value="";
+
+/* AI */
+
+const aiDiv = document.createElement("div");
+
+aiDiv.className="message ai";
+
+aiDiv.innerHTML="Thinking...";
+
+document.getElementById("feed").appendChild(aiDiv);
+
+try{
+
+const res = await fetch(
+"https://openrouter.ai/api/v1/chat/completions",
+{
+method:"POST",
+headers:{
+"Authorization":"Bearer " + API_KEY,
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+model:MODEL,
+messages:chat.messages.map(m=>({
+role:m.role==="ai"
+? "assistant"
+: "user",
+content:m.content
+}))
+})
+});
+
+const data = await res.json();
+
+const reply =
+data.choices[0].message.content;
+
+aiDiv.innerHTML = reply;
+
+chat.messages.push({
+role:"ai",
+content:reply
+});
+
+save();
+
+}
+
+catch(err){
+
+aiDiv.innerHTML="Connection Error";
+
+}
+
+}
+
+function toggleSidebar(){
+
+document.getElementById("sidebar")
+.classList.toggle("open");
+
+}
+
+/* AUTO LOGIN */
+
+if(activeUser){
+
+document.getElementById("gate").style.display="none";
+
+renderThreads();
+
+}
+
+</script>
+
+</body>
+</html>

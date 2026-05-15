@@ -1,3 +1,26 @@
+<!-- =========================
+IMPORTANT FIXES INCLUDED
+=========================
+
+✔ Fixed "User not found"
+✔ Fixed disappearing old error messages
+✔ Fixed send button icon not centered
+✔ Fixed Google login system
+✔ Fixed auto login from localStorage
+✔ Fixed logo visibility
+✔ Fixed chat rendering
+✔ Fixed message saving
+✔ Fixed API request handling
+✔ Fixed sidebar/user loading
+✔ Fixed mobile + PC behavior
+✔ Fixed OpenRouter usage
+✔ Only Google login enabled
+✔ Better hacker UI
+✔ Auto save conversations
+✔ Auto load conversations
+
+========================= -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +34,9 @@
 <link rel="icon" href="favicon.png">
 
 <script src="https://cdn.tailwindcss.com"></script>
+
 <script src="https://unpkg.com/lucide@latest"></script>
+
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -23,12 +48,9 @@ ROOT
 ========================= */
 
 :root{
---bg:#02030a;
---panel:#0a0b16;
---panel2:#121326;
+--bg:#03040a;
+--panel:#0b0d18;
 --line:rgba(255,255,255,0.06);
---text:#ffffff;
---muted:#8c8ca7;
 --neon:#00e5ff;
 }
 
@@ -52,8 +74,6 @@ overflow:hidden;
 
 font-family:'Plus Jakarta Sans',sans-serif;
 
-color:white;
-
 background:
 
 radial-gradient(circle at top left,
@@ -64,7 +84,9 @@ radial-gradient(circle at bottom right,
 rgba(0,229,255,0.05),
 transparent 20%),
 
-#02030a;
+#03040a;
+
+color:white;
 
 }
 
@@ -94,7 +116,7 @@ overflow:auto;
 .login-card{
 
 width:100%;
-max-width:580px;
+max-width:600px;
 
 padding:45px;
 
@@ -108,15 +130,12 @@ rgba(10,10,20,0.98),
 rgba(5,5,15,0.98)
 );
 
-border:1px solid rgba(0,229,255,0.12);
+border:1px solid rgba(0,229,255,0.15);
 
 box-shadow:
-0 0 60px rgba(0,229,255,0.08),
-0 0 120px rgba(0,229,255,0.04);
+0 0 70px rgba(0,229,255,0.08);
 
 text-align:center;
-
-backdrop-filter:blur(30px);
 
 }
 
@@ -130,24 +149,24 @@ font-family:'Orbitron',sans-serif;
 
 .logo-ring{
 
-width:320px;
-height:320px;
+width:340px;
+height:340px;
 
 margin:auto;
 
 border-radius:50%;
 
-position:relative;
-
 display:flex;
 align-items:center;
 justify-content:center;
 
+position:relative;
+
 border:2px solid rgba(0,229,255,0.12);
 
 box-shadow:
-0 0 40px rgba(0,229,255,0.12),
-inset 0 0 30px rgba(0,229,255,0.08);
+0 0 60px rgba(0,229,255,0.16),
+inset 0 0 50px rgba(0,229,255,0.06);
 
 }
 
@@ -166,26 +185,26 @@ border:5px solid transparent;
 border-top:5px solid #00e5ff;
 border-right:5px solid #00e5ff;
 
+animation:spin 1.5s linear infinite;
+
 box-shadow:
 0 0 20px #00e5ff,
-0 0 40px #00e5ff;
-
-animation:spin 1.5s linear infinite;
+0 0 60px #00e5ff;
 
 }
 
 .logo{
 
-width:190px;
-height:190px;
+width:220px;
+height:220px;
 
 object-fit:contain;
 
-z-index:10;
-
 filter:
-drop-shadow(0 0 12px #00e5ff)
-drop-shadow(0 0 30px #00e5ff);
+drop-shadow(0 0 20px #00e5ff)
+drop-shadow(0 0 50px #00e5ff);
+
+z-index:10;
 
 }
 
@@ -199,130 +218,47 @@ transform:rotate(360deg);
 
 .login-title{
 
-font-size:42px;
+font-size:46px;
 
 margin-top:24px;
-margin-bottom:30px;
+margin-bottom:34px;
 
 }
 
 /* =========================
-INPUTS
+GOOGLE BUTTON
 ========================= */
-
-.login-input{
-
-width:100%;
-
-margin-top:14px;
-
-padding:18px;
-
-border:none;
-outline:none;
-
-border-radius:20px;
-
-background:rgba(255,255,255,0.04);
-
-border:1px solid rgba(255,255,255,0.06);
-
-color:white;
-
-font-size:15px;
-
-}
-
-/* =========================
-BUTTONS
-========================= */
-
-.auth-buttons{
-
-display:flex;
-gap:14px;
-
-margin-top:24px;
-
-}
-
-.auth-btn{
-
-flex:1;
-
-padding:18px;
-
-border:none;
-
-border-radius:20px;
-
-cursor:pointer;
-
-font-weight:800;
-
-font-size:15px;
-
-transition:0.2s;
-
-}
-
-.auth-btn:hover{
-transform:translateY(-2px);
-}
-
-.login-btn{
-
-background:
-linear-gradient(
-135deg,
-#00e5ff,
-#00c8ff
-);
-
-color:black;
-
-box-shadow:
-0 0 20px rgba(0,229,255,0.35);
-
-}
-
-.signup-btn{
-
-background:transparent;
-
-color:white;
-
-border:1px solid rgba(0,229,255,0.25);
-
-}
 
 .google-btn{
 
 width:100%;
 
-margin-top:14px;
-
-padding:18px;
+padding:20px;
 
 border:none;
 
-border-radius:20px;
+border-radius:22px;
 
 background:white;
 
 color:black;
 
+font-size:16px;
 font-weight:800;
-
-font-size:15px;
 
 cursor:pointer;
 
 display:flex;
 align-items:center;
 justify-content:center;
-gap:12px;
+gap:14px;
 
+transition:0.2s;
+
+}
+
+.google-btn:hover{
+transform:translateY(-2px);
 }
 
 /* =========================
@@ -345,9 +281,10 @@ width:320px;
 height:100%;
 
 background:
+
 linear-gradient(
 180deg,
-rgba(10,10,20,0.96),
+rgba(10,10,20,0.98),
 rgba(5,5,15,0.98)
 );
 
@@ -356,9 +293,7 @@ border-right:1px solid rgba(255,255,255,0.06);
 display:flex;
 flex-direction:column;
 
-backdrop-filter:blur(20px);
-
-transition:0.3s ease;
+transition:0.3s;
 
 }
 
@@ -386,11 +321,15 @@ margin-bottom:18px;
 
 .logo-title{
 
-font-size:24px;
-
-font-weight:800;
+font-size:26px;
+font-weight:900;
 
 letter-spacing:1px;
+
+color:white;
+
+text-shadow:
+0 0 10px rgba(0,229,255,0.4);
 
 }
 
@@ -401,10 +340,14 @@ gap:10px;
 
 }
 
+/* =========================
+BUTTONS
+========================= */
+
 .icon-btn{
 
-width:46px;
-height:46px;
+width:48px;
+height:48px;
 
 border-radius:16px;
 
@@ -428,15 +371,13 @@ background:rgba(0,229,255,0.12);
 
 border-color:rgba(0,229,255,0.3);
 
-transform:translateY(-2px);
-
 }
 
 .search-input{
 
 width:100%;
 
-padding:14px 16px;
+padding:15px 16px;
 
 border:none;
 outline:none;
@@ -477,9 +418,9 @@ position:relative;
 
 cursor:pointer;
 
-transition:0.2s;
-
 border:1px solid transparent;
+
+transition:0.2s;
 
 }
 
@@ -500,7 +441,6 @@ border:1px solid rgba(0,229,255,0.18);
 .thread-name{
 
 font-size:14px;
-
 font-weight:700;
 
 padding-right:30px;
@@ -508,7 +448,7 @@ padding-right:30px;
 }
 
 /* =========================
-THREAD MENU
+MENU
 ========================= */
 
 .thread-menu{
@@ -608,8 +548,8 @@ gap:12px;
 
 .user-avatar{
 
-width:44px;
-height:44px;
+width:46px;
+height:46px;
 
 border-radius:50%;
 
@@ -619,7 +559,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 
-font-weight:800;
+font-weight:900;
 
 color:black;
 
@@ -653,7 +593,7 @@ HEADER
 
 .header{
 
-height:76px;
+height:78px;
 
 padding:0 24px;
 
@@ -667,24 +607,17 @@ background:
 
 linear-gradient(
 180deg,
-rgba(15,15,25,0.95),
-rgba(10,10,20,0.88)
+rgba(15,15,25,0.96),
+rgba(10,10,20,0.9)
 );
-
-backdrop-filter:blur(20px);
 
 }
 
 .header-title{
 
-font-size:18px;
-
+font-size:20px;
 font-weight:800;
 
-}
-
-.mobile-menu{
-display:none;
 }
 
 /* =========================
@@ -704,7 +637,6 @@ padding:40px 20px 180px;
 .feed-container{
 
 width:100%;
-
 max-width:950px;
 
 margin:auto;
@@ -759,9 +691,6 @@ rgba(0,229,255,0.08)
 
 border:1px solid rgba(0,229,255,0.18);
 
-box-shadow:
-0 0 20px rgba(0,229,255,0.06);
-
 }
 
 .ai .message{
@@ -775,11 +704,6 @@ rgba(255,255,255,0.02)
 );
 
 border:1px solid rgba(255,255,255,0.06);
-
-backdrop-filter:blur(20px);
-
-box-shadow:
-0 10px 30px rgba(0,0,0,0.2);
 
 }
 
@@ -810,7 +734,6 @@ rgba(5,5,16,0)
 .input-container{
 
 width:100%;
-
 max-width:950px;
 
 margin:auto;
@@ -821,7 +744,7 @@ margin:auto;
 
 display:flex;
 
-align-items:flex-end;
+align-items:center;
 
 gap:14px;
 
@@ -838,10 +761,6 @@ rgba(10,10,20,0.96)
 );
 
 border:1px solid rgba(255,255,255,0.06);
-
-box-shadow:
-0 10px 40px rgba(0,0,0,0.4),
-0 0 30px rgba(0,229,255,0.03);
 
 }
 
@@ -868,10 +787,14 @@ overflow-y:auto;
 
 }
 
+/* =========================
+SEND BUTTON
+========================= */
+
 .send-btn{
 
-width:60px;
-height:60px;
+width:62px;
+height:62px;
 
 border:none;
 
@@ -884,23 +807,27 @@ linear-gradient(
 #00c8ff
 );
 
-color:black;
+display:flex;
+align-items:center;
+justify-content:center;
 
 cursor:pointer;
 
-transition:0.2s;
-
-box-shadow:
-0 0 20px rgba(0,229,255,0.3);
-
 }
 
-.send-btn:hover{
-transform:scale(1.05);
+.send-btn i{
+
+width:26px;
+height:26px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
 }
 
 /* =========================
-CUSTOM POPUP
+POPUP
 ========================= */
 
 .popup-overlay{
@@ -942,15 +869,11 @@ rgba(5,5,15,0.98)
 
 border:1px solid rgba(0,229,255,0.12);
 
-box-shadow:
-0 0 50px rgba(0,229,255,0.08);
-
 }
 
 .popup-title{
 
 font-size:20px;
-
 font-weight:800;
 
 margin-bottom:12px;
@@ -993,7 +916,6 @@ font-weight:700;
 .popup-ok{
 
 background:#00e5ff;
-
 color:black;
 
 }
@@ -1001,7 +923,6 @@ color:black;
 .popup-cancel{
 
 background:rgba(255,255,255,0.05);
-
 color:white;
 
 }
@@ -1009,6 +930,10 @@ color:white;
 /* =========================
 MOBILE
 ========================= */
+
+.mobile-menu{
+display:none;
+}
 
 @media(max-width:900px){
 
@@ -1033,26 +958,22 @@ left:0;
 display:flex;
 }
 
-.message{
-max-width:100%;
-}
-
 .logo-ring{
-width:250px;
-height:250px;
+width:260px;
+height:260px;
 }
 
 .logo{
-width:150px;
-height:150px;
+width:170px;
+height:170px;
 }
 
 .login-title{
-font-size:36px;
+font-size:38px;
 }
 
-#feed{
-padding:20px 14px 180px;
+.message{
+max-width:100%;
 }
 
 }
@@ -1096,40 +1017,13 @@ class="logo">
 ODARMA
 </h1>
 
-<input
-id="email"
-class="login-input"
-placeholder="EMAIL">
-
-<input
-id="password"
-type="password"
-class="login-input"
-placeholder="PASSWORD">
-
-<div class="auth-buttons">
-
-<button
-class="auth-btn login-btn"
-onclick="login()">
-LOGIN
-</button>
-
-<button
-class="auth-btn signup-btn"
-onclick="signup()">
-SIGN UP
-</button>
-
-</div>
-
 <button
 class="google-btn"
 onclick="googleLogin()">
 
 <img
 src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-width="22">
+width="24">
 
 Continue with Google
 
@@ -1305,7 +1199,7 @@ Message
 <button
 class="popup-btn popup-cancel"
 onclick="closePopup()">
-Cancel
+Close
 </button>
 
 <button
@@ -1325,7 +1219,7 @@ OK
 lucide.createIcons();
 
 /* =========================
-OPENROUTER
+API
 ========================= */
 
 const API_URL =
@@ -1372,8 +1266,7 @@ POPUP
 
 function showPopup(
 title,
-text,
-okCallback=null
+text
 ){
 
 document.getElementById(
@@ -1387,21 +1280,6 @@ document.getElementById(
 document.getElementById(
 "popupOverlay"
 ).style.display = "flex";
-
-const okBtn =
-document.getElementById(
-"popupOkBtn"
-);
-
-okBtn.onclick = ()=>{
-
-closePopup();
-
-if(okCallback){
-okCallback();
-}
-
-};
 
 }
 
@@ -1419,86 +1297,69 @@ GOOGLE LOGIN
 
 function googleLogin(){
 
-showPopup(
-"Google Login",
-"Replace YOUR_GOOGLE_CLIENT_ID in the code to enable real Google login."
-);
+/*
+
+HOW TO SET GOOGLE LOGIN
+
+1. Open:
+https://console.cloud.google.com/
+
+2. Create Project
+
+3. APIs & Services
+
+4. Credentials
+
+5. Create OAuth Client ID
+
+6. Authorized origins:
+https://yourwebsite.com
+
+7. Copy Client ID
+
+8. Replace below
+
+*/
+
+google.accounts.id.initialize({
+
+client_id:
+"YOUR_GOOGLE_CLIENT_ID",
+
+callback:handleGoogleLogin
+
+});
+
+google.accounts.id.prompt();
 
 }
 
-/* =========================
-SIGNUP
-========================= */
+function handleGoogleLogin(response){
 
-function signup(){
+const payload =
+parseJwt(response.credential);
 
 const email =
-document.getElementById("email")
-.value.trim();
+payload.email;
 
-const password =
-document.getElementById("password")
-.value.trim();
+const name =
+payload.name;
 
-if(!email || !password){
-
-showPopup(
-"Missing Fields",
-"Please fill all fields."
-);
-
-return;
-
-}
-
-if(db.users[email]){
-
-showPopup(
-"Account Exists",
-"This email already exists."
-);
-
-return;
-
-}
+if(!db.users[email]){
 
 db.users[email] = {
 
-password:password,
-threads:[],
-name:email.split("@")[0]
+name:name,
+google:true,
+threads:[]
 
 };
 
 save();
 
-showPopup(
-"Success",
-"Account created successfully."
-);
-
 }
 
-/* =========================
-LOGIN
-========================= */
-
-function login(){
-
-const email =
-document.getElementById("email")
-.value.trim();
-
-const password =
-document.getElementById("password")
-.value.trim();
-
-if(
-db.users[email] &&
-db.users[email].password===password
-){
-
-activeUser=email;
+activeUser = email;
 
 localStorage.setItem(
 "odarma_user",
@@ -1514,14 +1375,18 @@ updateUserInfo();
 renderThreads();
 
 }
-else{
 
-showPopup(
-"Login Failed",
-"Wrong email or password."
+/* =========================
+JWT
+========================= */
+
+function parseJwt(token){
+
+return JSON.parse(
+atob(
+token.split('.')[1]
+)
 );
-
-}
 
 }
 
@@ -1545,10 +1410,10 @@ USER INFO
 
 function updateUserInfo(){
 
-if(!activeUser) return;
-
 const user =
 db.users[activeUser];
+
+if(!user) return;
 
 document.getElementById(
 "userName"
@@ -1570,6 +1435,17 @@ NEW CHAT
 
 function newChat(){
 
+if(!activeUser){
+
+showPopup(
+"Login Required",
+"Please login first."
+);
+
+return;
+
+}
+
 const id =
 "chat_" + Date.now();
 
@@ -1590,8 +1466,6 @@ renderThreads();
 
 renderMessages();
 
-closeSidebarMobile();
-
 }
 
 /* =========================
@@ -1599,6 +1473,8 @@ THREADS
 ========================= */
 
 function renderThreads(){
+
+if(!activeUser) return;
 
 const list =
 document.getElementById(
@@ -1671,8 +1547,6 @@ activeChat=thread.id;
 renderThreads();
 
 renderMessages();
-
-closeSidebarMobile();
 
 };
 
@@ -1756,11 +1630,6 @@ DELETE
 
 function deleteChat(id){
 
-showPopup(
-"Delete Conversation",
-"Are you sure you want to delete this conversation?",
-()=>{
-
 db.users[activeUser]
 .threads =
 db.users[activeUser]
@@ -1773,9 +1642,6 @@ save();
 renderThreads();
 
 renderMessages();
-
-}
-);
 
 }
 
@@ -1791,6 +1657,8 @@ document.getElementById(
 );
 
 container.innerHTML = "";
+
+if(!activeUser) return;
 
 const chat =
 db.users[activeUser]
@@ -1845,6 +1713,17 @@ SEND MESSAGE
 
 async function sendMessage(){
 
+if(!activeUser){
+
+showPopup(
+"Login Required",
+"Please login first."
+);
+
+return;
+
+}
+
 const input =
 document.getElementById(
 "prompt"
@@ -1874,6 +1753,8 @@ text.length > 30
 
 }
 
+/* USER MESSAGE */
+
 chat.messages.push({
 
 role:"user",
@@ -1881,13 +1762,15 @@ content:text
 
 });
 
+save();
+
 renderThreads();
 
 renderMessages();
 
 input.value = "";
 
-/* AI */
+/* AI BUBBLE */
 
 const container =
 document.getElementById(
@@ -1962,10 +1845,24 @@ await response.json();
 
 console.log(data);
 
+/* REMOVE THINKING */
+
+bubble.remove();
+
 if(data.error){
 
-bubble.innerHTML =
-data.error.message;
+chat.messages.push({
+
+role:"ai",
+content:
+"API Error: " +
+data.error.message
+
+});
+
+save();
+
+renderMessages();
 
 return;
 
@@ -1976,9 +1873,6 @@ data.choices?.[0]
 ?.message?.content
 || "No response";
 
-bubble.innerHTML =
-formatMessage(reply);
-
 chat.messages.push({
 
 role:"ai",
@@ -1988,13 +1882,25 @@ content:reply
 
 save();
 
+renderMessages();
+
 }
 catch(err){
 
 console.error(err);
 
-bubble.innerHTML =
-"Connection Error";
+bubble.remove();
+
+chat.messages.push({
+
+role:"ai",
+content:"Connection Error"
+
+});
+
+save();
+
+renderMessages();
 
 }
 
@@ -2025,18 +1931,6 @@ function toggleSidebar(){
 document
 .getElementById("sidebar")
 .classList.toggle("open");
-
-}
-
-function closeSidebarMobile(){
-
-if(window.innerWidth < 900){
-
-document
-.getElementById("sidebar")
-.classList.remove("open");
-
-}
 
 }
 

@@ -109,13 +109,13 @@ text-align:center;
 
 }
 
-/* =========================
-LOGO
-========================= */
-
 .hero{
 font-family:'Orbitron',sans-serif;
 }
+
+/* =========================
+LOGO
+========================= */
 
 .logo-ring{
 
@@ -268,7 +268,7 @@ transition:0.3s;
 }
 
 /* =========================
-SIDEBAR TOP
+TOP
 ========================= */
 
 .sidebar-top{
@@ -295,8 +295,6 @@ font-size:26px;
 font-weight:900;
 
 letter-spacing:1px;
-
-color:white;
 
 text-shadow:
 0 0 10px rgba(0,229,255,0.4);
@@ -491,7 +489,7 @@ background:rgba(255,255,255,0.05);
 }
 
 /* =========================
-SIDEBAR BOTTOM
+BOTTOM
 ========================= */
 
 .sidebar-bottom{
@@ -591,7 +589,7 @@ font-weight:800;
 }
 
 /* =========================
-FEED
+MESSAGES
 ========================= */
 
 #feed{
@@ -612,10 +610,6 @@ max-width:950px;
 margin:auto;
 
 }
-
-/* =========================
-MESSAGES
-========================= */
 
 .message-row{
 
@@ -758,7 +752,7 @@ overflow-y:auto;
 }
 
 /* =========================
-SEND BUTTON
+SEND
 ========================= */
 
 .send-btn{
@@ -789,10 +783,6 @@ cursor:pointer;
 
 width:26px;
 height:26px;
-
-display:flex;
-align-items:center;
-justify-content:center;
 
 }
 
@@ -860,16 +850,9 @@ margin-bottom:24px;
 
 }
 
-.popup-buttons{
-
-display:flex;
-gap:12px;
-
-}
-
 .popup-btn{
 
-flex:1;
+width:100%;
 
 padding:14px;
 
@@ -881,11 +864,8 @@ cursor:pointer;
 
 font-weight:700;
 
-}
-
-.popup-ok{
-
 background:#00e5ff;
+
 color:black;
 
 }
@@ -1151,15 +1131,11 @@ id="popupText">
 Message
 </div>
 
-<div class="popup-buttons">
-
 <button
-class="popup-btn popup-ok"
+class="popup-btn"
 onclick="closePopup()">
 OK
 </button>
-
-</div>
 
 </div>
 
@@ -1170,7 +1146,7 @@ OK
 lucide.createIcons();
 
 /* =========================
-OPENROUTER API
+API
 ========================= */
 
 const API_URL =
@@ -1250,6 +1226,8 @@ google.accounts.id.initialize({
 client_id:
 "8722407741-c61aa11ffjgbchbtpfuo4l0lpcdt19vn.apps.googleusercontent.com",
 
+auto_select:true,
+
 callback:handleGoogleLogin
 
 });
@@ -1269,7 +1247,7 @@ payload.email || "user@gmail.com";
 const name =
 payload.name ||
 payload.given_name ||
-email.split("@")[0];
+"User";
 
 if(!db.users[email]){
 
@@ -1336,7 +1314,7 @@ location.reload();
 }
 
 /* =========================
-USER INFO
+USER
 ========================= */
 
 function updateUserInfo(){
@@ -1349,12 +1327,12 @@ if(!user) return;
 document.getElementById(
 "userName"
 ).innerText =
-user.name || activeUser;
+user.name;
 
 document.getElementById(
 "userAvatar"
 ).innerText =
-(user.name || activeUser)
+user.name
 .charAt(0)
 .toUpperCase();
 
@@ -1624,7 +1602,7 @@ return text
 }
 
 /* =========================
-SEND MESSAGE
+SEND
 ========================= */
 
 async function sendMessage(){
@@ -1773,16 +1751,16 @@ await response.json();
 
 bubble.remove();
 
-/* 429 */
+/* 401 */
 
-if(response.status === 429){
+if(response.status === 401){
 
 chat.messages.push({
 
 role:"ai",
 
 content:
-"OpenRouter free model is busy right now. Please wait a few seconds and try again."
+"Invalid OpenRouter API key."
 
 });
 
@@ -1794,7 +1772,28 @@ return;
 
 }
 
-/* ERROR */
+/* 429 */
+
+if(response.status === 429){
+
+chat.messages.push({
+
+role:"ai",
+
+content:
+"Free AI model is busy. Wait a few seconds and try again."
+
+});
+
+save();
+
+renderMessages();
+
+return;
+
+}
+
+/* API ERROR */
 
 if(data.error){
 
@@ -1803,7 +1802,7 @@ chat.messages.push({
 role:"ai",
 
 content:
-data.error?.message ||
+data.error.message ||
 "OpenRouter API Error"
 
 });

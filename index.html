@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
@@ -28,13 +27,6 @@ box-sizing:border-box;
 -webkit-tap-highlight-color:transparent;
 }
 
-:root{
---bg:#03040a;
---panel:#0b0d18;
---line:rgba(255,255,255,0.06);
---neon:#00e5ff;
-}
-
 body{
 
 width:100vw;
@@ -45,7 +37,6 @@ overflow:hidden;
 font-family:'Plus Jakarta Sans',sans-serif;
 
 background:
-
 radial-gradient(circle at top left,
 rgba(0,229,255,0.08),
 transparent 20%),
@@ -79,8 +70,6 @@ padding:20px;
 
 background:black;
 
-overflow:auto;
-
 }
 
 .login-card{
@@ -90,10 +79,9 @@ max-width:600px;
 
 padding:45px;
 
-border-radius:42px;
+border-radius:40px;
 
 background:
-
 linear-gradient(
 180deg,
 rgba(10,10,20,0.98),
@@ -103,7 +91,7 @@ rgba(5,5,15,0.98)
 border:1px solid rgba(0,229,255,0.15);
 
 box-shadow:
-0 0 70px rgba(0,229,255,0.08);
+0 0 80px rgba(0,229,255,0.08);
 
 text-align:center;
 
@@ -113,14 +101,10 @@ text-align:center;
 font-family:'Orbitron',sans-serif;
 }
 
-/* =========================
-LOGO
-========================= */
-
 .logo-ring{
 
-width:340px;
-height:340px;
+width:320px;
+height:320px;
 
 margin:auto;
 
@@ -163,6 +147,14 @@ box-shadow:
 
 }
 
+@keyframes spin{
+
+100%{
+transform:rotate(360deg);
+}
+
+}
+
 .logo{
 
 width:220px;
@@ -174,30 +166,16 @@ filter:
 drop-shadow(0 0 20px #00e5ff)
 drop-shadow(0 0 50px #00e5ff);
 
-z-index:10;
-
-}
-
-@keyframes spin{
-
-100%{
-transform:rotate(360deg);
-}
-
 }
 
 .login-title{
 
-font-size:46px;
+font-size:50px;
 
-margin-top:24px;
-margin-bottom:34px;
+margin-top:28px;
+margin-bottom:35px;
 
 }
-
-/* =========================
-GOOGLE BUTTON
-========================= */
 
 .google-btn{
 
@@ -207,13 +185,13 @@ padding:20px;
 
 border:none;
 
-border-radius:22px;
+border-radius:20px;
 
 background:white;
 
 color:black;
 
-font-size:16px;
+font-size:17px;
 font-weight:800;
 
 cursor:pointer;
@@ -223,12 +201,6 @@ align-items:center;
 justify-content:center;
 gap:14px;
 
-transition:0.2s;
-
-}
-
-.google-btn:hover{
-transform:translateY(-2px);
 }
 
 /* =========================
@@ -251,7 +223,6 @@ width:320px;
 height:100%;
 
 background:
-
 linear-gradient(
 180deg,
 rgba(10,10,20,0.98),
@@ -266,10 +237,6 @@ flex-direction:column;
 transition:0.3s;
 
 }
-
-/* =========================
-TOP
-========================= */
 
 .sidebar-top{
 
@@ -294,8 +261,6 @@ margin-bottom:18px;
 font-size:26px;
 font-weight:900;
 
-letter-spacing:1px;
-
 text-shadow:
 0 0 10px rgba(0,229,255,0.4);
 
@@ -307,10 +272,6 @@ display:flex;
 gap:10px;
 
 }
-
-/* =========================
-BUTTONS
-========================= */
 
 .icon-btn{
 
@@ -329,15 +290,11 @@ justify-content:center;
 
 cursor:pointer;
 
-transition:0.2s;
-
 }
 
 .icon-btn:hover{
 
 background:rgba(0,229,255,0.12);
-
-border-color:rgba(0,229,255,0.3);
 
 }
 
@@ -360,10 +317,6 @@ color:white;
 
 }
 
-/* =========================
-THREADS
-========================= */
-
 #threadList{
 
 flex:1;
@@ -385,8 +338,6 @@ margin-bottom:10px;
 position:relative;
 
 cursor:pointer;
-
-border:1px solid transparent;
 
 transition:0.2s;
 
@@ -414,10 +365,6 @@ font-weight:700;
 padding-right:30px;
 
 }
-
-/* =========================
-THREAD MENU
-========================= */
 
 .thread-menu{
 
@@ -555,10 +502,6 @@ position:relative;
 
 }
 
-/* =========================
-HEADER
-========================= */
-
 .header{
 
 height:78px;
@@ -572,7 +515,6 @@ justify-content:space-between;
 border-bottom:1px solid rgba(255,255,255,0.06);
 
 background:
-
 linear-gradient(
 180deg,
 rgba(15,15,25,0.96),
@@ -587,10 +529,6 @@ font-size:20px;
 font-weight:800;
 
 }
-
-/* =========================
-MESSAGES
-========================= */
 
 #feed{
 
@@ -646,7 +584,6 @@ word-wrap:break-word;
 .user .message{
 
 background:
-
 linear-gradient(
 135deg,
 rgba(0,229,255,0.18),
@@ -660,7 +597,6 @@ border:1px solid rgba(0,229,255,0.18);
 .ai .message{
 
 background:
-
 linear-gradient(
 135deg,
 rgba(255,255,255,0.04),
@@ -668,6 +604,71 @@ rgba(255,255,255,0.02)
 );
 
 border:1px solid rgba(255,255,255,0.06);
+
+}
+
+/* =========================
+CODE BLOCK
+========================= */
+
+.code-block{
+
+margin-top:14px;
+
+border-radius:18px;
+
+overflow:hidden;
+
+border:1px solid rgba(255,255,255,0.08);
+
+background:#0f1117;
+
+}
+
+.code-header{
+
+height:46px;
+
+display:flex;
+align-items:center;
+justify-content:space-between;
+
+padding:0 16px;
+
+background:#161922;
+
+font-size:13px;
+
+color:#aaa;
+
+}
+
+.copy-btn{
+
+background:none;
+border:none;
+
+color:#00e5ff;
+
+cursor:pointer;
+
+font-size:13px;
+
+}
+
+.code-content{
+
+padding:18px;
+
+overflow-x:auto;
+
+font-family:monospace;
+
+font-size:14px;
+
+line-height:1.7;
+
+color:#d6e2ff;
 
 }
 
@@ -686,7 +687,6 @@ bottom:0;
 padding:24px;
 
 background:
-
 linear-gradient(
 to top,
 rgba(5,5,16,1),
@@ -717,7 +717,6 @@ padding:12px;
 border-radius:30px;
 
 background:
-
 linear-gradient(
 180deg,
 rgba(15,15,25,0.98),
@@ -751,10 +750,6 @@ overflow-y:auto;
 
 }
 
-/* =========================
-SEND
-========================= */
-
 .send-btn{
 
 width:62px;
@@ -776,97 +771,6 @@ align-items:center;
 justify-content:center;
 
 cursor:pointer;
-
-}
-
-.send-btn i{
-
-width:26px;
-height:26px;
-
-}
-
-/* =========================
-POPUP
-========================= */
-
-.popup-overlay{
-
-position:fixed;
-inset:0;
-
-background:rgba(0,0,0,0.55);
-
-display:none;
-
-align-items:center;
-justify-content:center;
-
-z-index:99999;
-
-backdrop-filter:blur(8px);
-
-padding:20px;
-
-}
-
-.popup{
-
-width:100%;
-max-width:420px;
-
-padding:30px;
-
-border-radius:28px;
-
-background:
-
-linear-gradient(
-180deg,
-rgba(12,12,24,0.98),
-rgba(5,5,15,0.98)
-);
-
-border:1px solid rgba(0,229,255,0.12);
-
-}
-
-.popup-title{
-
-font-size:20px;
-font-weight:800;
-
-margin-bottom:12px;
-
-}
-
-.popup-text{
-
-color:#aaa;
-
-line-height:1.7;
-
-margin-bottom:24px;
-
-}
-
-.popup-btn{
-
-width:100%;
-
-padding:14px;
-
-border:none;
-
-border-radius:16px;
-
-cursor:pointer;
-
-font-weight:700;
-
-background:#00e5ff;
-
-color:black;
 
 }
 
@@ -909,10 +813,6 @@ height:260px;
 .logo{
 width:170px;
 height:170px;
-}
-
-.login-title{
-font-size:38px;
 }
 
 .message{
@@ -1111,36 +1011,6 @@ onclick="sendMessage()">
 
 </div>
 
-<!-- POPUP -->
-
-<div
-class="popup-overlay"
-id="popupOverlay">
-
-<div class="popup">
-
-<div
-class="popup-title"
-id="popupTitle">
-Title
-</div>
-
-<div
-class="popup-text"
-id="popupText">
-Message
-</div>
-
-<button
-class="popup-btn"
-onclick="closePopup()">
-OK
-</button>
-
-</div>
-
-</div>
-
 <script>
 
 lucide.createIcons();
@@ -1156,7 +1026,7 @@ const API_KEY =
 "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";
 
 const MODEL =
-"openai/gpt-oss-120b:free";
+"cognitivecomputations/dolphin-mistral-24b-venice-edition:free";
 
 /* =========================
 DATABASE
@@ -1175,51 +1045,10 @@ localStorage.getItem("odarma_user")
 let activeChat = null;
 
 /* =========================
-SAVE
+GOOGLE INIT
 ========================= */
 
-function save(){
-
-localStorage.setItem(
-"odarma_db",
-JSON.stringify(db)
-);
-
-}
-
-/* =========================
-POPUP
-========================= */
-
-function showPopup(title,text){
-
-document.getElementById(
-"popupTitle"
-).innerText = title;
-
-document.getElementById(
-"popupText"
-).innerText = text;
-
-document.getElementById(
-"popupOverlay"
-).style.display = "flex";
-
-}
-
-function closePopup(){
-
-document.getElementById(
-"popupOverlay"
-).style.display = "none";
-
-}
-
-/* =========================
-GOOGLE LOGIN
-========================= */
-
-function googleLogin(){
+window.onload = ()=>{
 
 google.accounts.id.initialize({
 
@@ -1231,6 +1060,31 @@ auto_select:true,
 callback:handleGoogleLogin
 
 });
+
+if(
+activeUser &&
+localStorage.getItem(
+"odarma_google_login"
+)==="true"
+){
+
+document.getElementById(
+"gate"
+).style.display="none";
+
+updateUserInfo();
+
+renderThreads();
+
+}
+
+};
+
+/* =========================
+GOOGLE LOGIN
+========================= */
+
+function googleLogin(){
 
 google.accounts.id.prompt();
 
@@ -1254,7 +1108,6 @@ if(!db.users[email]){
 db.users[email] = {
 
 name:name,
-google:true,
 threads:[]
 
 };
@@ -1277,7 +1130,7 @@ localStorage.setItem(
 
 document.getElementById(
 "gate"
-).style.display = "none";
+).style.display="none";
 
 updateUserInfo();
 
@@ -1291,6 +1144,19 @@ return JSON.parse(
 atob(
 token.split('.')[1]
 )
+);
+
+}
+
+/* =========================
+SAVE
+========================= */
+
+function save(){
+
+localStorage.setItem(
+"odarma_db",
+JSON.stringify(db)
 );
 
 }
@@ -1314,7 +1180,7 @@ location.reload();
 }
 
 /* =========================
-USER
+USER INFO
 ========================= */
 
 function updateUserInfo(){
@@ -1332,9 +1198,36 @@ user.name;
 document.getElementById(
 "userAvatar"
 ).innerText =
-user.name
-.charAt(0)
+user.name.charAt(0)
 .toUpperCase();
+
+}
+
+/* =========================
+HEX
+========================= */
+
+function textToHex(text){
+
+return [...text]
+.map(x=>
+x.charCodeAt(0)
+.toString(16)
+)
+.join("");
+
+}
+
+/* =========================
+TITLE
+========================= */
+
+function generateTitle(text){
+
+return text
+.split(" ")
+.slice(0,5)
+.join(" ");
 
 }
 
@@ -1452,6 +1345,19 @@ list.appendChild(div);
 
 });
 
+if(
+!activeChat &&
+db.users[activeUser].threads.length
+){
+
+activeChat =
+db.users[activeUser]
+.threads[0].id;
+
+renderMessages();
+
+}
+
 }
 
 /* =========================
@@ -1544,6 +1450,76 @@ renderMessages();
 }
 
 /* =========================
+FORMAT MESSAGE
+========================= */
+
+function formatMessage(text){
+
+text = text.replace(/</g,"&lt;");
+text = text.replace(/>/g,"&gt;");
+
+text = text.replace(
+
+/```(\w+)?\n([\s\S]*?)```/g,
+
+function(match,lang,code){
+
+const id =
+"code_" + Math.random()
+.toString(36)
+.substring(2);
+
+return `
+
+<div class="code-block">
+
+<div class="code-header">
+
+<span>
+${lang || "code"}
+</span>
+
+<button
+class="copy-btn"
+onclick="copyCode('${id}')">
+
+Copy
+
+</button>
+
+</div>
+
+<pre
+class="code-content"
+id="${id}"><code>${code}</code></pre>
+
+</div>
+
+`;
+
+}
+
+);
+
+return text.replace(/\n/g,"<br>");
+
+}
+
+/* =========================
+COPY CODE
+========================= */
+
+function copyCode(id){
+
+const code =
+document.getElementById(id)
+.innerText;
+
+navigator.clipboard.writeText(code);
+
+}
+
+/* =========================
 MESSAGES
 ========================= */
 
@@ -1594,29 +1570,13 @@ scrollBottom();
 
 }
 
-function formatMessage(text){
-
-return text
-.replace(/\n/g,"<br>");
-
-}
-
 /* =========================
 SEND
 ========================= */
 
 async function sendMessage(){
 
-if(!activeUser){
-
-showPopup(
-"Login Required",
-"Please login first."
-);
-
-return;
-
-}
+if(!activeUser) return;
 
 const input =
 document.getElementById(
@@ -1641,9 +1601,7 @@ t=>t.id===activeChat
 if(chat.title==="New Chat"){
 
 chat.title =
-text.length > 30
-? text.substring(0,30)+"..."
-: text;
+generateTitle(text);
 
 }
 
@@ -1692,9 +1650,11 @@ scrollBottom();
 
 try{
 
-await new Promise(
-r=>setTimeout(r,1000)
-);
+const hex =
+textToHex(text);
+
+const finalPrompt =
+`Convert this hex to text and answer:\n${hex}`;
 
 const response =
 await fetch(API_URL,{
@@ -1726,19 +1686,13 @@ messages:[
 {
 role:"system",
 content:
-"You are ODARMA AI, a futuristic hacker-style AI assistant with concise replies."
+"You are ODARMA AI, a futuristic hacker-style AI assistant."
 },
 
-...chat.messages.map(m=>({
-
-role:
-m.role === "user"
-? "user"
-: "assistant",
-
-content:m.content
-
-}))
+{
+role:"user",
+content:finalPrompt
+}
 
 ]
 
@@ -1751,59 +1705,12 @@ await response.json();
 
 bubble.remove();
 
-/* 401 */
-
-if(response.status === 401){
-
-chat.messages.push({
-
-role:"ai",
-
-content:
-"Invalid OpenRouter API key."
-
-});
-
-save();
-
-renderMessages();
-
-return;
-
-}
-
-/* 429 */
-
-if(response.status === 429){
-
-chat.messages.push({
-
-role:"ai",
-
-content:
-"Free AI model is busy. Wait a few seconds and try again."
-
-});
-
-save();
-
-renderMessages();
-
-return;
-
-}
-
-/* API ERROR */
-
 if(data.error){
 
 chat.messages.push({
 
 role:"ai",
-
-content:
-data.error.message ||
-"OpenRouter API Error"
+content:data.error.message
 
 });
 
@@ -1814,8 +1721,6 @@ renderMessages();
 return;
 
 }
-
-/* REPLY */
 
 const reply =
 data.choices?.[0]
@@ -1835,8 +1740,6 @@ renderMessages();
 
 }
 catch(err){
-
-console.error(err);
 
 bubble.remove();
 
@@ -1906,30 +1809,6 @@ sendMessage();
 
 }
 );
-
-/* =========================
-AUTO LOGIN
-========================= */
-
-if(
-
-activeUser &&
-
-localStorage.getItem(
-"odarma_google_login"
-)==="true"
-
-){
-
-document.getElementById(
-"gate"
-).style.display = "none";
-
-updateUserInfo();
-
-renderThreads();
-
-}
 
 </script>
 

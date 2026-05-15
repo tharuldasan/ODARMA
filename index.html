@@ -24,10 +24,9 @@ ROOT
 :root{
     --bg:#050510;
     --panel:#0d0d18;
-    --panel2:#141425;
     --line:rgba(255,255,255,0.06);
     --text:#ffffff;
-    --muted:#8c8ca7;
+    --muted:#8b8ca7;
     --neon:#15e0ff;
 }
 
@@ -46,8 +45,8 @@ body{
     width:100vw;
     height:100vh;
     overflow:hidden;
-    color:var(--text);
     background:var(--bg);
+    color:var(--text);
     font-family:'Plus Jakarta Sans',sans-serif;
 
     background:
@@ -56,7 +55,7 @@ body{
     transparent 25%),
 
     radial-gradient(circle at bottom right,
-    rgba(21,224,255,0.04),
+    rgba(21,224,255,0.03),
     transparent 30%);
 }
 
@@ -78,13 +77,13 @@ LOGIN
     width:95%;
     max-width:560px;
 
-    padding:45px;
-
-    border-radius:42px;
-
-    background:rgba(12,12,22,0.95);
+    background:rgba(12,12,24,0.95);
 
     border:1px solid var(--line);
+
+    border-radius:40px;
+
+    padding:45px;
 
     backdrop-filter:blur(30px);
 
@@ -95,10 +94,6 @@ LOGIN
     font-family:'Orbitron',sans-serif;
 }
 
-/* =========================
-BIG LOGO
-========================= */
-
 .logo-ring{
     width:280px;
     height:280px;
@@ -107,11 +102,11 @@ BIG LOGO
 
     border-radius:50%;
 
-    position:relative;
-
     display:flex;
     align-items:center;
     justify-content:center;
+
+    position:relative;
 
     border:2px solid rgba(21,224,255,0.12);
 }
@@ -134,8 +129,8 @@ BIG LOGO
 }
 
 .logo{
-    width:150px;
-    height:150px;
+    width:160px;
+    height:160px;
     object-fit:contain;
     z-index:10;
 }
@@ -148,13 +143,9 @@ BIG LOGO
 
 .login-title{
     font-size:42px;
-    margin-top:26px;
-    margin-bottom:30px;
+    margin-top:24px;
+    margin-bottom:28px;
 }
-
-/* =========================
-INPUTS
-========================= */
 
 .login-input{
     width:100%;
@@ -163,6 +154,10 @@ INPUTS
 
     padding:18px;
 
+    border:none;
+
+    outline:none;
+
     border-radius:18px;
 
     background:rgba(255,255,255,0.04);
@@ -170,8 +165,6 @@ INPUTS
     border:1px solid var(--line);
 
     color:white;
-
-    outline:none;
 
     font-size:15px;
 }
@@ -198,6 +191,10 @@ INPUTS
     transition:0.2s;
 }
 
+.auth-btn:hover{
+    transform:translateY(-2px);
+}
+
 .login-btn{
     background:linear-gradient(
     135deg,
@@ -216,10 +213,6 @@ INPUTS
     border:1px solid rgba(21,224,255,0.25);
 }
 
-.auth-btn:hover{
-    transform:translateY(-2px);
-}
-
 /* =========================
 APP
 ========================= */
@@ -235,7 +228,7 @@ SIDEBAR
 ========================= */
 
 .sidebar{
-    width:300px;
+    width:310px;
 
     height:100%;
 
@@ -251,10 +244,6 @@ SIDEBAR
 
     transition:0.3s ease;
 }
-
-/* =========================
-SIDEBAR TOP
-========================= */
 
 .sidebar-top{
     padding:20px;
@@ -285,10 +274,6 @@ SIDEBAR TOP
     gap:10px;
 }
 
-/* =========================
-BUTTONS
-========================= */
-
 .icon-btn{
     width:44px;
     height:44px;
@@ -316,24 +301,22 @@ BUTTONS
     transform:translateY(-2px);
 }
 
-/* =========================
-SEARCH
-========================= */
-
 .search-input{
     width:100%;
 
     padding:14px 16px;
 
-    border-radius:16px;
+    border:none;
 
-    border:1px solid var(--line);
+    outline:none;
+
+    border-radius:16px;
 
     background:rgba(255,255,255,0.04);
 
-    color:white;
+    border:1px solid var(--line);
 
-    outline:none;
+    color:white;
 }
 
 /* =========================
@@ -359,9 +342,9 @@ THREADS
 
     cursor:pointer;
 
-    border:1px solid transparent;
-
     transition:0.2s;
+
+    border:1px solid transparent;
 }
 
 .thread:hover{
@@ -383,7 +366,7 @@ THREADS
 }
 
 /* =========================
-THREAD MENU
+MENU
 ========================= */
 
 .thread-menu{
@@ -431,6 +414,8 @@ THREAD MENU
 .dropdown button{
     width:100%;
 
+    padding:14px;
+
     background:none;
 
     border:none;
@@ -438,8 +423,6 @@ THREAD MENU
     color:white;
 
     text-align:left;
-
-    padding:14px;
 
     cursor:pointer;
 }
@@ -479,7 +462,7 @@ HEADER
 
     padding:0 24px;
 
-    background:rgba(10,10,20,0.65);
+    background:rgba(10,10,20,0.7);
 
     backdrop-filter:blur(20px);
 }
@@ -495,7 +478,7 @@ HEADER
 }
 
 /* =========================
-CHAT FEED
+FEED
 ========================= */
 
 #feed{
@@ -541,9 +524,9 @@ MESSAGES
 
     font-size:15px;
 
-    white-space:pre-wrap;
-
     word-wrap:break-word;
+
+    white-space:pre-wrap;
 }
 
 .user .message{
@@ -597,16 +580,13 @@ INPUT
 
     gap:14px;
 
-    background:rgba(12,12,24,0.96);
-
-    border:1px solid var(--line);
+    padding:12px;
 
     border-radius:30px;
 
-    padding:12px;
+    background:rgba(12,12,24,0.96);
 
-    box-shadow:
-    0 10px 40px rgba(0,0,0,0.35);
+    border:1px solid var(--line);
 }
 
 #prompt{
@@ -639,8 +619,6 @@ INPUT
 
     border-radius:18px;
 
-    cursor:pointer;
-
     background:linear-gradient(
     135deg,
     #15e0ff,
@@ -648,6 +626,8 @@ INPUT
     );
 
     color:black;
+
+    cursor:pointer;
 
     transition:0.2s;
 }
@@ -670,7 +650,7 @@ MOBILE
         top:0;
         bottom:0;
 
-        z-index:4000;
+        z-index:5000;
     }
 
     .sidebar.open{
@@ -685,18 +665,14 @@ MOBILE
         max-width:100%;
     }
 
-    #feed{
-        padding:20px 14px 180px;
-    }
-
     .logo-ring{
         width:220px;
         height:220px;
     }
 
     .logo{
-        width:120px;
-        height:120px;
+        width:130px;
+        height:130px;
     }
 
 }
@@ -720,9 +696,7 @@ SCROLLBAR
 
 <body>
 
-<!-- =========================
-LOGIN
-========================= -->
+<!-- LOGIN -->
 
 <div id="gate">
 
@@ -767,9 +741,7 @@ SIGN UP
 
 </div>
 
-<!-- =========================
-APP
-========================= -->
+<!-- APP -->
 
 <div class="app">
 
@@ -891,17 +863,17 @@ onclick="sendMessage()">
 lucide.createIcons();
 
 /* =========================
-CONFIG
+OPENROUTER
 ========================= */
 
 const API_URL =
 "https://openrouter.ai/api/v1/chat/completions";
 
 const API_KEY =
-"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";
+"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";
 
 const MODEL =
-"meta-llama/llama-3.3-70b-instruct:free";
+"google/gemma-4-31b-it:free";
 
 /* =========================
 DATABASE
@@ -994,7 +966,7 @@ db.users[email] &&
 db.users[email].password===password
 ){
 
-activeUser = email;
+activeUser=email;
 
 localStorage.setItem(
 "odarma_user",
@@ -1002,7 +974,7 @@ email
 );
 
 document.getElementById("gate")
-.style.display = "none";
+.style.display="none";
 
 renderThreads();
 
@@ -1060,7 +1032,7 @@ closeSidebarMobile();
 }
 
 /* =========================
-RENDER THREADS
+THREADS
 ========================= */
 
 function renderThreads(){
@@ -1145,7 +1117,7 @@ list.appendChild(div);
 }
 
 /* =========================
-DROPDOWNS
+MENU
 ========================= */
 
 document.addEventListener(
@@ -1188,7 +1160,7 @@ menu.style.display==="block"
 }
 
 /* =========================
-RENAME CHAT
+RENAME
 ========================= */
 
 function renameChat(id){
@@ -1213,7 +1185,7 @@ renderThreads();
 }
 
 /* =========================
-DELETE CHAT
+DELETE
 ========================= */
 
 function deleteChat(id){
@@ -1229,7 +1201,8 @@ if(activeChat===id){
 
 activeChat=null;
 
-document.getElementById(
+document
+.getElementById(
 "feedContainer"
 ).innerHTML="";
 
@@ -1242,7 +1215,7 @@ renderThreads();
 }
 
 /* =========================
-RENDER MESSAGES
+MESSAGES
 ========================= */
 
 function renderMessages(){
@@ -1301,7 +1274,7 @@ return text
 }
 
 /* =========================
-SEND MESSAGE
+SEND
 ========================= */
 
 async function sendMessage(){
@@ -1350,7 +1323,7 @@ renderMessages();
 
 input.value="";
 
-/* AI MESSAGE */
+/* AI BUBBLE */
 
 const container =
 document.getElementById(
@@ -1404,6 +1377,10 @@ window.location.href,
 body:JSON.stringify({
 
 model:MODEL,
+
+reasoning:{
+enabled:true
+},
 
 messages:chat.messages.map(m=>({
 

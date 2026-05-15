@@ -1170,17 +1170,17 @@ OK
 lucide.createIcons();
 
 /* =========================
-API
+OPENROUTER API
 ========================= */
 
 const API_URL =
 "https://openrouter.ai/api/v1/chat/completions";
 
 const API_KEY =
-"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";
+"YOUR_OPENROUTER_API_KEY";
 
 const MODEL =
-"meta-llama/llama-3.3-70b-instruct:free";
+"cognitivecomputations/dolphin-mistral-24b-venice-edition:free";
 
 /* =========================
 DATABASE
@@ -1264,10 +1264,12 @@ const payload =
 parseJwt(response.credential);
 
 const email =
-payload.email;
+payload.email || "user@gmail.com";
 
 const name =
-payload.name;
+payload.name ||
+payload.given_name ||
+email.split("@")[0];
 
 if(!db.users[email]){
 
@@ -1304,10 +1306,6 @@ updateUserInfo();
 renderThreads();
 
 }
-
-/* =========================
-JWT
-========================= */
 
 function parseJwt(token){
 
@@ -1618,10 +1616,6 @@ scrollBottom();
 
 }
 
-/* =========================
-FORMAT
-========================= */
-
 function formatMessage(text){
 
 return text
@@ -1675,8 +1669,6 @@ text.length > 30
 
 }
 
-/* USER MESSAGE */
-
 chat.messages.push({
 
 role:"user",
@@ -1722,6 +1714,10 @@ scrollBottom();
 
 try{
 
+await new Promise(
+r=>setTimeout(r,1000)
+);
+
 const response =
 await fetch(API_URL,{
 
@@ -1738,7 +1734,7 @@ headers:{
 "HTTP-Referer":
 window.location.href,
 
-"X-Title":
+"X-OpenRouter-Title":
 "ODARMA AI"
 
 },
@@ -1747,7 +1743,15 @@ body:JSON.stringify({
 
 model:MODEL,
 
-messages:chat.messages.map(m=>({
+messages:[
+
+{
+role:"system",
+content:
+"You are ODARMA AI, a futuristic hacker-style AI assistant with concise replies."
+},
+
+...chat.messages.map(m=>({
 
 role:
 m.role === "user"
@@ -1758,6 +1762,8 @@ content:m.content
 
 }))
 
+]
+
 })
 
 });
@@ -1767,14 +1773,16 @@ await response.json();
 
 bubble.remove();
 
-if(data.error){
+/* 429 */
+
+if(response.status === 429){
 
 chat.messages.push({
 
 role:"ai",
+
 content:
-"API Error: " +
-data.error.message
+"OpenRouter free model is busy right now. Please wait a few seconds and try again."
 
 });
 
@@ -1785,6 +1793,30 @@ renderMessages();
 return;
 
 }
+
+/* ERROR */
+
+if(data.error){
+
+chat.messages.push({
+
+role:"ai",
+
+content:
+data.error?.message ||
+"OpenRouter API Error"
+
+});
+
+save();
+
+renderMessages();
+
+return;
+
+}
+
+/* REPLY */
 
 const reply =
 data.choices?.[0]
@@ -1804,6 +1836,8 @@ renderMessages();
 
 }
 catch(err){
+
+console.error(err);
 
 bubble.remove();
 

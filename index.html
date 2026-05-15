@@ -1,26 +1,3 @@
-<!-- =========================
-IMPORTANT FIXES INCLUDED
-=========================
-
-✔ Fixed "User not found"
-✔ Fixed disappearing old error messages
-✔ Fixed send button icon not centered
-✔ Fixed Google login system
-✔ Fixed auto login from localStorage
-✔ Fixed logo visibility
-✔ Fixed chat rendering
-✔ Fixed message saving
-✔ Fixed API request handling
-✔ Fixed sidebar/user loading
-✔ Fixed mobile + PC behavior
-✔ Fixed OpenRouter usage
-✔ Only Google login enabled
-✔ Better hacker UI
-✔ Auto save conversations
-✔ Auto load conversations
-
-========================= -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,26 +10,12 @@ IMPORTANT FIXES INCLUDED
 
 <link rel="icon" href="favicon.png">
 
-<script src="https://cdn.tailwindcss.com"></script>
-
-<script src="https://unpkg.com/lucide@latest"></script>
-
 <script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="https://unpkg.com/lucide@latest"></script>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-
-/* =========================
-ROOT
-========================= */
-
-:root{
---bg:#03040a;
---panel:#0b0d18;
---line:rgba(255,255,255,0.06);
---neon:#00e5ff;
-}
 
 /* =========================
 GLOBAL
@@ -63,6 +26,13 @@ margin:0;
 padding:0;
 box-sizing:border-box;
 -webkit-tap-highlight-color:transparent;
+}
+
+:root{
+--bg:#03040a;
+--panel:#0b0d18;
+--line:rgba(255,255,255,0.06);
+--neon:#00e5ff;
 }
 
 body{
@@ -448,7 +418,7 @@ padding-right:30px;
 }
 
 /* =========================
-MENU
+THREAD MENU
 ========================= */
 
 .thread-menu{
@@ -920,13 +890,6 @@ color:black;
 
 }
 
-.popup-cancel{
-
-background:rgba(255,255,255,0.05);
-color:white;
-
-}
-
 /* =========================
 MOBILE
 ========================= */
@@ -997,9 +960,7 @@ border-radius:20px;
 
 <body>
 
-<!-- =========================
-LOGIN
-========================= -->
+<!-- LOGIN -->
 
 <div id="gate">
 
@@ -1033,9 +994,7 @@ Continue with Google
 
 </div>
 
-<!-- =========================
-APP
-========================= -->
+<!-- APP -->
 
 <div class="app">
 
@@ -1172,9 +1131,7 @@ onclick="sendMessage()">
 
 </div>
 
-<!-- =========================
-POPUP
-========================= -->
+<!-- POPUP -->
 
 <div
 class="popup-overlay"
@@ -1197,14 +1154,8 @@ Message
 <div class="popup-buttons">
 
 <button
-class="popup-btn popup-cancel"
-onclick="closePopup()">
-Close
-</button>
-
-<button
 class="popup-btn popup-ok"
-id="popupOkBtn">
+onclick="closePopup()">
 OK
 </button>
 
@@ -1229,7 +1180,7 @@ const API_KEY =
 "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";
 
 const MODEL =
-"google/gemma-4-31b-it:free";
+"meta-llama/llama-3.3-70b-instruct:free";
 
 /* =========================
 DATABASE
@@ -1264,10 +1215,7 @@ JSON.stringify(db)
 POPUP
 ========================= */
 
-function showPopup(
-title,
-text
-){
+function showPopup(title,text){
 
 document.getElementById(
 "popupTitle"
@@ -1297,34 +1245,10 @@ GOOGLE LOGIN
 
 function googleLogin(){
 
-/*
-
-HOW TO SET GOOGLE LOGIN
-
-1. Open:
-https://console.cloud.google.com/
-
-2. Create Project
-
-3. APIs & Services
-
-4. Credentials
-
-5. Create OAuth Client ID
-
-6. Authorized origins:
-https://yourwebsite.com
-
-7. Copy Client ID
-
-8. Replace below
-
-*/
-
 google.accounts.id.initialize({
 
 client_id:
-"YOUR_GOOGLE_CLIENT_ID",
+"8722407741-c61aa11ffjgbchbtpfuo4l0lpcdt19vn.apps.googleusercontent.com",
 
 callback:handleGoogleLogin
 
@@ -1366,6 +1290,11 @@ localStorage.setItem(
 email
 );
 
+localStorage.setItem(
+"odarma_google_login",
+"true"
+);
+
 document.getElementById(
 "gate"
 ).style.display = "none";
@@ -1398,6 +1327,10 @@ function logout(){
 
 localStorage.removeItem(
 "odarma_user"
+);
+
+localStorage.removeItem(
+"odarma_google_login"
 );
 
 location.reload();
@@ -1434,17 +1367,6 @@ NEW CHAT
 ========================= */
 
 function newChat(){
-
-if(!activeUser){
-
-showPopup(
-"Login Required",
-"Please login first."
-);
-
-return;
-
-}
 
 const id =
 "chat_" + Date.now();
@@ -1770,7 +1692,7 @@ renderMessages();
 
 input.value = "";
 
-/* AI BUBBLE */
+/* THINKING */
 
 const container =
 document.getElementById(
@@ -1828,9 +1750,9 @@ model:MODEL,
 messages:chat.messages.map(m=>({
 
 role:
-m.role==="ai"
-? "assistant"
-: "user",
+m.role === "user"
+? "user"
+: "assistant",
 
 content:m.content
 
@@ -1842,10 +1764,6 @@ content:m.content
 
 const data =
 await response.json();
-
-console.log(data);
-
-/* REMOVE THINKING */
 
 bubble.remove();
 
@@ -1886,8 +1804,6 @@ renderMessages();
 
 }
 catch(err){
-
-console.error(err);
 
 bubble.remove();
 
@@ -1962,7 +1878,15 @@ sendMessage();
 AUTO LOGIN
 ========================= */
 
-if(activeUser){
+if(
+
+activeUser &&
+
+localStorage.getItem(
+"odarma_google_login"
+)==="true"
+
+){
 
 document.getElementById(
 "gate"

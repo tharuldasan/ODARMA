@@ -1691,7 +1691,7 @@ Give complete answers.`
 ...chat.messages.map(m=>({
 
 role:
-m.role === "user"
+msg.role === "user"
 ? "user"
 : "assistant",
 
@@ -1709,6 +1709,27 @@ const data =
 await response.json();
 
 bubble.remove();
+
+if(data.error){
+
+chat.messages.push({
+
+role:"ai",
+
+content:
+"⚠️ " +
+(data.error.message ||
+"OpenRouter Error")
+
+});
+
+save();
+
+renderMessages();
+
+return;
+
+}
 
 if(response.status === 401){
 
@@ -1738,23 +1759,6 @@ role:"ai",
 content:
 "⏳ Free model is busy. Please wait a moment and try again."
 
-});
-
-save();
-
-renderMessages();
-
-return;
-
-}
-
-chat.messages.push({
-
-role:"ai",
-content:
-"⚠️ " +
-(data.error.message ||
-"OpenRouter Error")
 });
 
 save();

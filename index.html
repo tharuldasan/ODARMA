@@ -1023,10 +1023,10 @@ const API_URL =
 "https://openrouter.ai/api/v1/chat/completions";
 
 const API_KEY =
-"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";
+"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";
 
 const MODEL =
-"openai/gpt-oss-120b:free";
+"nousresearch/hermes-3-llama-3.1-405b:free";
 
 /* =========================
 DATABASE
@@ -1203,20 +1203,6 @@ user.name.charAt(0)
 
 }
 
-/* =========================
-HEX
-========================= */
-
-function textToHex(text){
-
-return [...text]
-.map(x=>
-x.charCodeAt(0)
-.toString(16)
-)
-.join("");
-
-}
 
 /* =========================
 TITLE
@@ -1224,10 +1210,17 @@ TITLE
 
 function generateTitle(text){
 
-return text
-.split(" ")
-.slice(0,5)
-.join(" ");
+let title =
+text.replace(/\n/g," ").trim();
+
+if(title.length > 40){
+
+title =
+title.substring(0,40) + "...";
+
+}
+
+return title;
 
 }
 
@@ -1650,11 +1643,6 @@ scrollBottom();
 
 try{
 
-const hex =
-textToHex(text);
-
-const finalPrompt =
-`Get the translation of this hex and give suitable answer for it:\n${hex}`;
 
 const response =
 await fetch(API_URL,{
@@ -1686,13 +1674,30 @@ messages:[
 {
 role:"system",
 content:
-"You are ODARMA AI, a futuristic hacker-style AI assistant."
+`You are ODARMA AI.
+
+Be intelligent, accurate and helpful.
+
+Use markdown formatting.
+
+When giving code:
+- use code blocks
+- mention language
+- explain the code
+
+Give complete answers.`
 },
 
-{
-role:"user",
-content:finalPrompt
-}
+...chat.messages.map(m=>({
+
+role:
+m.role === "user"
+? "user"
+: "assistant",
+
+content:m.content
+
+}))
 
 ]
 
@@ -1705,13 +1710,51 @@ await response.json();
 
 bubble.remove();
 
-if(data.error){
+if(response.status === 401){
 
 chat.messages.push({
 
 role:"ai",
-content:data.error.message
 
+content:
+"🔑 Invalid OpenRouter API Key"
+
+});
+
+save();
+
+renderMessages();
+
+return;
+
+}
+
+if(response.status === 429){
+
+chat.messages.push({
+
+role:"ai",
+
+content:
+"⏳ Free model is busy. Please wait a moment and try again."
+
+});
+
+save();
+
+renderMessages();
+
+return;
+
+}
+
+chat.messages.push({
+
+role:"ai",
+content:
+"⚠️ " +
+(data.error.message ||
+"OpenRouter Error")
 });
 
 save();
